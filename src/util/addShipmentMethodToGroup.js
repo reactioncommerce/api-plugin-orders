@@ -58,7 +58,7 @@ export default async function addShipmentMethodToGroup(context, {
     label: selectedFulfillmentMethod.method.label,
     group: selectedFulfillmentMethod.method.group,
     name: selectedFulfillmentMethod.method.name,
-    handling: selectedFulfillmentMethod.handlingPrice,
-    rate: selectedFulfillmentMethod.rate
+    handling: context.queries.getExchangedPrice(selectedFulfillmentMethod.handlingPrice, currencyCode),
+    rate: context.queries.getExchangedPrice(selectedFulfillmentMethod.rate, currencyCode),
   };
 }

@@ -254,6 +254,26 @@ export const CommonOrderItem = new SimpleSchema({
   },
   "title": String,
   "variantId": String,
+  deliveryUrgency: {
+    type: String,
+    optional: true,
+  },
+  "preferredDeliveryDate": {
+    type: Date,
+    optional: true,
+  },
+  "deliveryDate": {
+    type: Date,
+    optional: true,
+  },
+  "message": {
+    type: String,
+    optional: true,
+  },
+  "messageOnItem": {
+    type: String,
+    optional: true,
+  },
   "variantTitle": {
     type: String,
     optional: true
@@ -431,6 +451,22 @@ export const orderInputSchema = new SimpleSchema({
   "ordererPreferredLanguage": {
     type: String,
     optional: true
+  },
+  message: {
+    type: String,
+    optional: true,
+  },
+  messageOnItem: {
+    type: String,
+    optional: true,
+  },
+  deliveryUrgency: {
+    type: String,
+    optional: true,
+  },
+  preferredDeliveryDate: {
+    type: Date,
+    optional: true,
   },
   "shopId": String
 });
@@ -650,6 +686,29 @@ const OrderItemAttribute = new SimpleSchema({
   }
 });
 
+const ImageSizes = new SimpleSchema({
+  large: {
+    type: String,
+    optional: true,
+  },
+  medium: {
+    type: String,
+    optional: true,
+  },
+  original: {
+    type: String,
+    optional: true,
+  },
+  small: {
+    type: String,
+    optional: true,
+  },
+  thumbnail: {
+    type: String,
+    optional: true,
+  },
+});
+
 /**
  * @name OrderItem
  * @memberof Schemas
@@ -743,6 +802,10 @@ export const OrderItem = new SimpleSchema({
   },
   "shopId": String,
   "subtotal": Number,
+  "imageURLs": {
+    type: ImageSizes,
+    optional: true,
+  },
   "title": String,
   "updatedAt": Date,
   "variantId": {
@@ -1109,6 +1172,30 @@ export const Order = new SimpleSchema({
   "updatedAt": {
     type: Date,
     optional: true
+  },
+  "imageURLs": {
+    type: ImageSizes,
+    optional: true,
+  },
+    deliveryUrgency: {
+    type: String,
+    optional: true,
+  },
+  "preferredDeliveryDate": {
+    type: Date,
+    optional: true,
+  },
+  "deliveryDate": {
+    type: Date,
+    optional: true,
+  },
+  "message": {
+    type: String,
+    optional: true,
+  },
+  "messageOnItem": {
+    type: String,
+    optional: true,
   },
   "workflow": {
     type: Workflow,

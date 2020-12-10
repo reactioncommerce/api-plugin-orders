@@ -62,7 +62,6 @@ export default async function buildOrderItem(context, { currencyCode, inputItem 
     label: chosenVariant.attributeLabel,
     value: chosenVariant.optionTitle
   });
-
   const now = new Date();
   const newItem = {
     _id: Random.id(),
@@ -80,6 +79,7 @@ export default async function buildOrderItem(context, { currencyCode, inputItem 
     productType: chosenProduct.type,
     productTagIds: chosenProduct.tagIds,
     productVendor: chosenProduct.vendor,
+    imageURLs: (chosenVariant.primaryImage && chosenVariant.primaryImage.URLs) || (chosenProduct.primaryImage && chosenProduct.primaryImage.URLs),
     quantity,
     shopId: chosenProduct.shopId,
     subtotal: +accounting.toFixed(quantity * finalPrice, 3),

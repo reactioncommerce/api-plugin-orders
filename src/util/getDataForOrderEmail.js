@@ -60,6 +60,7 @@ export default async function getDataForOrderEmailDefault(context, { order }) {
     city: shippingAddress.city,
     fullName: shippingAddress.fullName,
     postal: shippingAddress.postal,
+    phone: shippingAddress.phone,
     region: shippingAddress.region
   } : null;
 
@@ -70,6 +71,7 @@ export default async function getDataForOrderEmailDefault(context, { order }) {
       city: order.billingAddress.city,
       fullName: order.billingAddress.fullName,
       postal: order.billingAddress.postal,
+      phone: order.billingAddress.phone,
       region: order.billingAddress.region
     };
   } else if (paymentBillingAddress) {
@@ -78,6 +80,7 @@ export default async function getDataForOrderEmailDefault(context, { order }) {
       city: paymentBillingAddress.city,
       fullName: paymentBillingAddress.fullName,
       postal: paymentBillingAddress.postal,
+      phone: paymentBillingAddress.phone,
       region: paymentBillingAddress.region
     };
   }

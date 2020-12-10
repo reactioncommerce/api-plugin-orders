@@ -87,8 +87,9 @@ export default async function updateOrderFulfillmentGroup(context, input) {
   );
   if (modifiedCount === 0 || !updatedOrder) throw new ReactionError("server-error", "Unable to update order");
 
+  const action = status.replace("coreOrderWorkflow/", "");
   await appEvents.emit("afterOrderUpdate", {
-    order: updatedOrder,
+    order: Object.assign({}, updatedOrder, {action}),
     updatedBy: userId
   });
 

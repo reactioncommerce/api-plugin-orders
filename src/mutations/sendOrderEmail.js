@@ -43,6 +43,12 @@ export default async function sendOrderEmail(context, input) {
     templateName = "orders/refunded";
   } else if (action === "itemRefund") {
     templateName = "orders/itemRefund";
+  } else if (action === "completed") {
+    templateName = "orders/completed";
+  } else if (action === "new-admin") {
+    templateName = "orders/new-admin";
+  } else if (action === "canceled") {
+    templateName = "orders/canceled";
   } else {
     templateName = `orders/${dataForEmail.order.workflow.status}`;
   }

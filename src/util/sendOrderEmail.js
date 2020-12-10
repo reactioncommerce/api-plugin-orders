@@ -22,6 +22,7 @@ export default async function sendOrderEmail(context, order, action) {
     Object.assign(dataForEmail, someData);
   }
 
+  // TODO Discount in email
   const language = await getLanguageForOrder(context, order);
 
   await context.mutations.sendOrderEmail(context, {
