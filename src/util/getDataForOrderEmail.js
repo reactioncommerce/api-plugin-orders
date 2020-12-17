@@ -125,8 +125,9 @@ export default async function getDataForOrderEmailDefault(context, { order }) {
       },
       // These next two are for backward compatibility with existing email templates.
       // New templates should use `imageURLs` instead.
-      productImage: item.imageURLs && item.imageURLs.large,
-      variantImage: item.imageURLs && item.imageURLs.large
+      productImage: getAbsoluteUrl(item.imageURLs && item.imageURLs.large),
+      variantImage: getAbsoluteUrl(item.imageURLs && item.imageURLs.large),
+      thumbnail: getAbsoluteUrl(item.imageURLs && item.imageURLs.thumbnail),
     }));
 
     return { ...group, items };
