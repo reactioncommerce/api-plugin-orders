@@ -19,7 +19,15 @@ const inputSchema = new SimpleSchema({
   dataForEmail: {
     type: Object,
     blackbox: true
-  }
+  },
+  after: {
+    type: Date,
+    optional: true,
+  },
+  templateName: {
+    type: String,
+    optional: true,
+  },
 });
 
 /**
@@ -31,33 +39,32 @@ const inputSchema = new SimpleSchema({
  */
 export default async function sendOrderEmail(context, input) {
   inputSchema.validate(input);
-
-  const { action, dataForEmail, fromShop, language, to } = input;
-
-  // Compile email
-  let templateName;
-
-  if (action === "shipped") {
-    templateName = "orders/shipped";
-  } else if (action === "refunded") {
-    templateName = "orders/refunded";
-  } else if (action === "itemRefund") {
-    templateName = "orders/itemRefund";
-  } else if (action === "completed") {
-    templateName = "orders/completed";
-  } else if (action === "new-admin") {
-    templateName = "orders/new-admin";
-  } else if (action === "canceled") {
-    templateName = "orders/canceled";
-  } else {
-    templateName = `orders/${dataForEmail.order.workflow.status}`;
-  }
+  const { action, dataForEmail, fromShop, language, to, after, templateName} = input;
 
   await context.mutations.sendEmail(context, {
     data: dataForEmail,
     fromShop,
-    templateName,
+    templateName: templateName? templateName : getTemplateName(action, dataForEmail),
     language,
-    to
+    to,
+    after,
   });
+}
+
+function getTemplateName(action, dataForEmail) {
+  if (action === "shipped") {
+    return "orders/shipped";
+  } else if (action === "refunded") {
+    return "orders/refunded";
+  } else if (action === "itemRefund") {
+    return "orders/itemRefund";
+  } else if (action === "completed") {
+    return "orders/completed";
+  } else if (action === "new-admin") {
+    return "orders/new-admin";
+  } else if (action === "canceled") {
+    return"orders/canceled";
+  } else {
+    return `orders/${dataForEmail.order.workflow.status}`;
+  }
 }
