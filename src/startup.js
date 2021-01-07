@@ -34,8 +34,6 @@ function sendEmail(context, order) {
 
 const emailActions = ["shipped", "completed"]
 function updated(context, order) {
-  console.log('shop', shop)
-  console.log('order', order);
   if (!emailActions.includes(order.action)) {
     return;
   }
