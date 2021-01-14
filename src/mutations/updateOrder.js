@@ -33,6 +33,7 @@ export default async function updateOrder(context, input) {
   const {
     customFields,
     email,
+    accountId,
     orderId,
     status
   } = input;
@@ -60,6 +61,7 @@ export default async function updateOrder(context, input) {
   };
 
   if (email) modifier.$set.email = email;
+  if (accountId) modifier.$set.accountId = accountId;
 
   if (customFields) modifier.$set.customFields = customFields;
 

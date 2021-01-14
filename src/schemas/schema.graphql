@@ -923,6 +923,9 @@ input UpdateOrderInput {
   "Set the order email to this"
   email: String
 
+  "Set account id"
+  accountId: String
+
   "ID of the order to update"
   orderId: ID!
 

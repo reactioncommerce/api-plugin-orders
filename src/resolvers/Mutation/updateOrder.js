@@ -21,12 +21,14 @@ export default async function updateOrder(parentResult, { input }, context) {
     customFields,
     email,
     orderId,
-    status
+    status,
+    accountId,
   } = input;
 
   const { order } = await context.mutations.updateOrder(context, {
     customFields,
     email,
+    accountId: decodeAccountOpaqueId(accountId),
     orderId: decodeOrderOpaqueId(orderId),
     status
   });
