@@ -13,6 +13,10 @@ const inputSchema = new SimpleSchema({
     optional: true
   },
   orderId: String,
+  accountId: {
+    type: String,
+    optional: true,
+  },
   status: {
     type: String,
     optional: true
