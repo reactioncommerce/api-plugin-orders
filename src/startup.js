@@ -6,21 +6,21 @@ import sendOrderEmail from "./util/sendOrderEmail.js";
  * @param {Object} context.collections Map of MongoDB collections
  * @returns {undefined}
  */
-let support_email;
+let support_email = process.env["ORDER_NOTIFY_EMAIL"];
 export default async function ordersStartup(context) {
   const { appEvents } = context;
 
-  const primaryShop = await context.queries.primaryShop(context.getInternalContext());
-  if (primaryShop && primaryShop.emails && primaryShop.emails.length > 0) {
-    support_email = primaryShop.emails[0].address || ''
-    console.log("Using support email: ", support_email)
+  if(!support_email) {
+    const primaryShop = await context.queries.primaryShop(context.getInternalContext());
+    if (primaryShop && primaryShop.emails && primaryShop.emails.length > 0) {
+      support_email = primaryShop.emails[0].address || ''
+    }
   }
-
+  console.log("Using support email: ", support_email)
   appEvents.on(
     "afterOrderCreate",
     ({ order }) => sendEmail(context, order),
   );
-  appEvents.on("afterOrderCreate", ({ order }) => console.log('order', order));
   appEvents.on("afterOrderUpdate", ({ order }) => updated(context, order));
   appEvents.on("afterOrderCancel", ({ order }) => sendOrderEmail(context, order, 'canceled'));
 }
