@@ -39,7 +39,13 @@ export default async function updateOrder(context, input) {
     email,
     accountId,
     orderId,
-    status
+    // status,
+    // preferredDeliveryDate,
+    // deliveryUrgency,
+    // requestedImageUrls,
+    // requestedVideoUrls,
+    // notes,
+    // deliveryDate,
   } = input;
 
   const { appEvents, collections, userId } = context;
@@ -69,6 +75,16 @@ export default async function updateOrder(context, input) {
 
   if (customFields) modifier.$set.customFields = customFields;
 
+
+
+  // if (preferredDeliveryDate) modifier.$set.preferredDeliveryDate = preferredDeliveryDate;
+  // if (deliveryUrgency) modifier.$set.deliveryUrgency = deliveryUrgency;
+  // if (requestedImageUrls) modifier.$set.requestedImageUrls = requestedImageUrls;
+  // if (requestedVideoUrls) modifier.$set.requestedVideoUrls = requestedVideoUrls;
+  // if (notes) modifier.$set.notes = notes;
+  // if (deliveryDate) modifier.$set.deliveryDate = deliveryDate;
+
+
   if (status && order.workflow.status !== status) {
     modifier.$set["workflow.status"] = status;
     modifier.$push = {
@@ -95,3 +111,12 @@ export default async function updateOrder(context, input) {
 
   return { order: updatedOrder };
 }
+
+
+// preferredDeliveryDate,
+//     deliveryUrgency,
+// requestedImageUrls,
+//   requestedVideoUrls
+//   ,notes
+// deliveryDate
+// shipping

@@ -37,7 +37,10 @@ export default async function register(app) {
           [{ "payments.address.fullName": 1 }],
           [{ "shipping.address.fullName": 1 }],
           [{ "payments.address.phone": 1 }],
-          [{ "workflow.status": 1 }, { name: "c2_workflow.status" }]
+          [{ "workflow.status": 1 }, { name: "c2_workflow.status" }],
+          [{deliveryDate:1},{name:"c2_deliveryDate"}],
+          [{preferredDeliveryDate:1},{name:"c2_preferredDeliveryDate"}],
+          [{deliveryUrgency:1},{name:"c2_deliveryUrgency"}],
         ]
       }
     },

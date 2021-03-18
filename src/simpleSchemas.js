@@ -266,6 +266,24 @@ export const CommonOrderItem = new SimpleSchema({
     type: Date,
     optional: true,
   },
+  "imageRequested":{
+    type:Boolean,
+    optional:true
+  },
+  videoRequested:{
+    type:Boolean,
+    optional:true
+  },
+  "requestedImageUrls": {
+    type: Array,
+    optional: true
+  },
+  "requestedImageUrls.$": String,
+  "requestedVideoUrls": {
+    type: Array,
+    optional: true
+  },
+  "requestedVideoUrls.$": String,
   "message": {
     type: String,
     optional: true,
@@ -452,6 +470,24 @@ export const orderInputSchema = new SimpleSchema({
     type: String,
     optional: true
   },
+  "imageRequested":{
+    type:Boolean,
+    optional:true
+  },
+  videoRequested:{
+    type:Boolean,
+    optional:true
+  },
+  "requestedImageUrls": {
+    type: Array,
+    optional: true
+  },
+  "requestedImageUrls.$": String,
+  "requestedVideoUrls": {
+    type: Array,
+    optional: true
+  },
+  "requestedVideoUrls.$": String,
   message: {
     type: String,
     optional: true,
@@ -1189,6 +1225,24 @@ export const Order = new SimpleSchema({
     type: Date,
     optional: true,
   },
+  "imageRequested":{
+    type:Boolean,
+    optional:true
+  },
+  videoRequested:{
+    type:Boolean,
+    optional:true
+  },
+  "requestedImageUrls": {
+    type: Array,
+    optional: true
+  },
+  "requestedImageUrls.$": String,
+  "requestedVideoUrls": {
+    type: Array,
+    optional: true
+  },
+  "requestedVideoUrls.$": String,
   "message": {
     type: String,
     optional: true,

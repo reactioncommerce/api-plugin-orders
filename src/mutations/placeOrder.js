@@ -128,6 +128,10 @@ export default async function placeOrder(context, input) {
     deliveryUrgency,
     message,
     messageOnItem,
+    imageRequested,
+    videoRequested,
+    requestedImageUrls,
+    requestedVideoUrls,
     shopId
   } = orderInput;
   const { accountId, appEvents, collections, getFunctionsOfType, userId } = context;
@@ -245,6 +249,10 @@ export default async function placeOrder(context, input) {
     deliveryUrgency,
     message,
     messageOnItem,
+    imageRequested,
+    videoRequested,
+    requestedImageUrls,
+    requestedVideoUrls,
     workflow: {
       status: "new",
       workflow: ["new"]

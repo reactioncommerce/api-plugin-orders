@@ -19,6 +19,9 @@ export default async function orders(context, { filters, shopIds } = {}) {
 
   const query = {};
   let createdAtFilter = {};
+  let deliveredAtFilter = {};
+  let preferredDeliveredAtFilter ={};
+  let deliveryUrgencyFilter={};
   let fulfillmentStatusFilter = {};
   let paymentStatusFilter = {};
   let searchFieldFilter = {};
@@ -39,6 +42,38 @@ export default async function orders(context, { filters, shopIds } = {}) {
     };
   }
 
+  if (filters && filters.deliveredAt) {
+    const { deliveredAt } = filters;
+    // Both fields are optional
+    const gteProp = deliveredAt.gte ? { $gte: deliveredAt.gte } : {};
+    const lteProp = deliveredAt.lte ? { $lte: deliveredAt.lte } : {};
+    deliveredAtFilter = {
+      deliveryDate: {
+        ...gteProp,
+        ...lteProp
+      }
+    }
+  }
+
+  if (filters && filters.preferredDeliveredAt) {
+    const { preferredDeliveredAt } = filters;
+    // Both fields are optional
+    const gteProp = preferredDeliveredAt.gte ? { $gte: preferredDeliveredAt.gte } : {};
+    const lteProp = preferredDeliveredAt.lte ? { $lte: preferredDeliveredAt.lte } : {};
+    preferredDeliveredAtFilter = {
+      preferredDeliveryDate: {
+        ...gteProp,
+        ...lteProp
+      }
+    }
+  }
+
+  if(filters && filters.urgencyTag){
+    deliveryUrgencyFilter = {
+      deliveryUrgency: filters.urgencyTag
+    }
+
+  }
   // Validate user has permission to view orders for all shopIds
   if (!shopIds) throw new ReactionError("invalid-param", "You must provide ShopId(s)");
   for (const shopId of shopIds) {
@@ -98,6 +133,9 @@ export default async function orders(context, { filters, shopIds } = {}) {
   // Build the final query
   query.$and = [{
     ...createdAtFilter,
+    ...deliveredAtFilter,
+    ...preferredDeliveredAtFilter,
+    ...deliveryUrgencyFilter,
     ...fulfillmentStatusFilter,
     ...paymentStatusFilter,
     ...searchFieldFilter,

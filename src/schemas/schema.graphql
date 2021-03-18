@@ -214,6 +214,15 @@ enum OrdersSortByField {
 
   "Sort by the date and time when the order was placed"
   createdAt
+
+  "Sort by using delivery date."
+  deliveryDate
+
+  "Sort by using preferred delivery date."
+  preferredDeliveryDate
+
+  "Sort by using delivery urgency."
+  deliveryUrgency
 }
 
 """
@@ -614,7 +623,7 @@ type Order implements Node {
   "Delivery date selected by the system."
   deliveryDate: DateTime
 
- "The URLs for a picture of the item in various sizes"
+  "The URLs for a picture of the item in various sizes"
   imageURLs: ImageSizes
 
   "Message to be sent with the order"
@@ -622,6 +631,12 @@ type Order implements Node {
 
   "Message to be placed on item, say, birthday cake."
   messageOnItem: String
+
+  imageRequested:Boolean
+  videoRequested:Boolean
+  requestedImageUrls:[String!]
+  requestedVideoUrls:[String!]
+
 }
 
 "A note about an order"
@@ -785,6 +800,11 @@ input OrderInput {
 
   "Message to be placed on item, say, birthday cake."
   messageOnItem: String
+
+  imageRequested:Boolean
+  videoRequested:Boolean
+  requestedImageUrls:[String!]
+  requestedVideoUrls:[String!]
 }
 
 "Input for adding order payments"
@@ -931,6 +951,15 @@ input UpdateOrderInput {
 
   "Set the current order status to this"
   status: String
+#
+#  preferredDeliveryDate:DateTime
+#
+#  deliveryUrgency :String
+#
+#  requestedImageUrls:[String!]
+#  requestedVideoUrls:[String!]
+#  notes:[OrderNote]!
+#  deliveryDate :DateTime
 }
 
 "Input for the updateOrderFulfillmentGroup mutation"
@@ -1084,6 +1113,10 @@ input CreatedAtInput {
 input OrderFilterInput {
   "A createdAt date range to filter by"
   createdAt: CreatedAtInput
+
+  deliveredAt: CreatedAtInput
+  preferredDeliveredAt:CreatedAtInput
+  urgencyTag: String
 
   "An order's fulfillment status"
   fulfillmentStatus: [OrderFulfillmentStatus]
