@@ -16,7 +16,8 @@
       "capture:payment",
       "move:item",
       "refund:payment",
-      "update"
+      "update",
+      "assign:fulfillmentManager"
     ],
     "effect": "allow"
   },
@@ -37,5 +38,25 @@
         "options": {}
       }
     }
+  },
+
+  {
+    "description": "Fulfillment managers acting on specific entities.",
+    "subjects": [ "reaction:groups:fulfilment-manager" ],
+    "resources": [ "reaction:legacy:orders:*" ],
+    "actions": [
+      "update:deliveryInfo",
+      "assign:deliveryRepresentative"
+    ],
+    "effect": "allow"
+  },
+  {
+    "description": "Delivery representative acting on specific entities.",
+    "subjects": [ "reaction:groups:delivery-representative" ],
+    "resources": [ "reaction:legacy:orders:*" ],
+    "actions": [
+      "update:deliveryInfo"
+      ],
+    "effect": "allow"
   }
 ]

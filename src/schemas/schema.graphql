@@ -187,6 +187,19 @@ extend type Mutation {
     "Mutation input"
     input: UpdateOrderFulfillmentGroupInput!
   ): UpdateOrderFulfillmentGroupPayload!
+
+  "Use this mutation to assign an order to a fulfillment manager."
+  assignOrderToFulfillmentManager(
+    "Mutation input"
+    input: AssignOrderToAccountInput!
+  ): AssignOrderToAccountPayload!
+
+  "Use this mutation to assign an order to a delivery representative."
+  assignOrderToDeliveryRepresentative(
+    "Mutation input"
+    input: AssignOrderToAccountInput!
+  ): AssignOrderToAccountPayload!
+
 }
 
 "Allowed values for the `OrderFulfillmentGroupItems` sortBy parameter"
@@ -1129,4 +1142,26 @@ input OrderFilterInput {
 
   "The order's status to filter by"
   status: OrderStatus
+}
+"Input type to assign order to fulfillmentManager"
+input AssignOrderToAccountInput{
+  "ID of shop"
+  shopId: ID!
+  "ID of the order to be assigned"
+  orderId: ID!
+  "ID of the account who is to be assigned"
+  accountId: ID!
+  "group Id"
+  groupId:String!
+}
+
+type AssignOrderToAccountPayload{
+  "ID of shop"
+  shopId: ID!
+  "ID of the order to be assigned"
+  orderId: ID!
+  "ID of the account who is assigned as fulfillment manager"
+  fulfillmentManagerId: ID
+  "ID of the account who is assigned as delivery representative"
+  deliveryRepresentativeId: ID
 }

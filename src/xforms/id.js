@@ -11,7 +11,8 @@ const namespaces = {
   Payment: "reaction/payment",
   Product: "reaction/product",
   Refund: "reaction/refund",
-  Shop: "reaction/shop"
+  Shop: "reaction/shop",
+  Group: "reaction/group",
 };
 
 export const encodeAccountOpaqueId = encodeOpaqueId(namespaces.Account);
@@ -23,6 +24,7 @@ export const encodePaymentOpaqueId = encodeOpaqueId(namespaces.Payment);
 export const encodeProductOpaqueId = encodeOpaqueId(namespaces.Product);
 export const encodeRefundOpaqueId = encodeOpaqueId(namespaces.Refund);
 export const encodeShopOpaqueId = encodeOpaqueId(namespaces.Shop);
+export const encodeGroupOpaqueId = encodeOpaqueId(namespaces.Group);
 
 export const decodeAccountOpaqueId = decodeOpaqueIdForNamespace(namespaces.Account);
 export const decodeCartOpaqueId = decodeOpaqueIdForNamespace(namespaces.Cart);
@@ -34,6 +36,7 @@ export const decodePaymentOpaqueId = decodeOpaqueIdForNamespace(namespaces.Payme
 export const decodeProductOpaqueId = decodeOpaqueIdForNamespace(namespaces.Product);
 export const decodeRefundOpaqueId = decodeOpaqueIdForNamespace(namespaces.Refund);
 export const decodeShopOpaqueId = decodeOpaqueIdForNamespace(namespaces.Shop);
+export const decodeGroupOpaqueId = decodeOpaqueIdForNamespace(namespaces.Group);
 
 /**
  * @param {Object[]} items Array of OrderItemInput

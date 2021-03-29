@@ -266,13 +266,13 @@ export const CommonOrderItem = new SimpleSchema({
     type: Date,
     optional: true,
   },
-  "imageRequested":{
-    type:Boolean,
-    optional:true
+  "imageRequested": {
+    type: Boolean,
+    optional: true
   },
-  videoRequested:{
-    type:Boolean,
-    optional:true
+  videoRequested: {
+    type: Boolean,
+    optional: true
   },
   "requestedImageUrls": {
     type: Array,
@@ -289,6 +289,14 @@ export const CommonOrderItem = new SimpleSchema({
     optional: true,
   },
   "messageOnItem": {
+    type: String,
+    optional: true,
+  },
+  fulfillmentManager: {
+    type: String,
+    optional: true,
+  },
+  deliveryRepresentative: {
     type: String,
     optional: true,
   },
@@ -470,13 +478,13 @@ export const orderInputSchema = new SimpleSchema({
     type: String,
     optional: true
   },
-  "imageRequested":{
-    type:Boolean,
-    optional:true
+  "imageRequested": {
+    type: Boolean,
+    optional: true
   },
-  videoRequested:{
-    type:Boolean,
-    optional:true
+  videoRequested: {
+    type: Boolean,
+    optional: true
   },
   "requestedImageUrls": {
     type: Array,
@@ -1213,7 +1221,7 @@ export const Order = new SimpleSchema({
     type: ImageSizes,
     optional: true,
   },
-    deliveryUrgency: {
+  deliveryUrgency: {
     type: String,
     optional: true,
   },
@@ -1225,13 +1233,13 @@ export const Order = new SimpleSchema({
     type: Date,
     optional: true,
   },
-  "imageRequested":{
-    type:Boolean,
-    optional:true
+  "imageRequested": {
+    type: Boolean,
+    optional: true
   },
-  videoRequested:{
-    type:Boolean,
-    optional:true
+  videoRequested: {
+    type: Boolean,
+    optional: true
   },
   "requestedImageUrls": {
     type: Array,
@@ -1248,6 +1256,14 @@ export const Order = new SimpleSchema({
     optional: true,
   },
   "messageOnItem": {
+    type: String,
+    optional: true,
+  },
+  fulfillmentManager: {
+    type: String,
+    optional: true,
+  },
+  deliveryRepresentative: {
     type: String,
     optional: true,
   },

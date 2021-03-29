@@ -7,6 +7,8 @@ import sendOrderEmail from "./sendOrderEmail.js";
 import splitOrderItem from "./splitOrderItem.js";
 import updateOrder from "./updateOrder.js";
 import updateOrderFulfillmentGroup from "./updateOrderFulfillmentGroup.js";
+import assignOrderToFulfillmentManager from "./assignOrderToFulfillmentManager.js";
+import assignOrderToDeliveryRepresentative from "./assignOrderToDeliveryRepresentative.js";
 
 export default {
   addOrderFulfillmentGroup,
@@ -17,5 +19,7 @@ export default {
   sendOrderEmail,
   splitOrderItem,
   updateOrder,
-  updateOrderFulfillmentGroup
+  updateOrderFulfillmentGroup,
+  assignOrderToFulfillmentManager,
+  assignOrderToDeliveryRepresentative
 };
