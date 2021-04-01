@@ -1092,6 +1092,20 @@ export const Payment = new SimpleSchema({
   }
 });
 
+export const ExceptionNote = new SimpleSchema({
+  account: {
+    type: String,
+    optional: true,
+  },
+  content: {
+    type: String,
+    optional: true,
+  },
+  createdAt: {
+    type: Date,
+    optional: true,
+  },
+})
 /**
  * @name Order Schema
  * @memberof Schemas
@@ -1267,6 +1281,11 @@ export const Order = new SimpleSchema({
     type: String,
     optional: true,
   },
+  exceptionNotes:{
+    type:Array,
+    optional:true
+  },
+  "exceptionNotes.$":ExceptionNote,
   "workflow": {
     type: Workflow,
     optional: true,
