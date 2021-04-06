@@ -860,6 +860,16 @@ export const OrderItem = new SimpleSchema({
     type: String,
     optional: true
   },
+  picked: {
+    type: Boolean,
+    optional: true,
+    defaultValue:false
+  },
+  packed: {
+    type: Boolean,
+    optional: true,
+    defaultValue:false
+  },
   "workflow": {
     type: Workflow,
     optional: true,
@@ -1092,20 +1102,37 @@ export const Payment = new SimpleSchema({
   }
 });
 
-export const ExceptionNote = new SimpleSchema({
-  account: {
+// export const ExceptionNote = new SimpleSchema({
+//   account: {
+//     type: String,
+//     optional: true,
+//   },
+//   content: {
+//     type: String,
+//     optional: true,
+//   },
+//   createdAt: {
+//     type: Date,
+//     optional: true,
+//   },
+// })
+
+export const fulfillmentChecklist = new SimpleSchema({
+  name: {
     type: String,
-    optional: true,
+    optional: true
   },
-  content: {
+  key: {
     type: String,
-    optional: true,
+    optional: true
   },
-  createdAt: {
-    type: Date,
-    optional: true,
-  },
+  state: {
+    type: Boolean,
+    defaultValue: false,
+    optional: true
+  }
 })
+
 /**
  * @name Order Schema
  * @memberof Schemas
@@ -1281,11 +1308,12 @@ export const Order = new SimpleSchema({
     type: String,
     optional: true,
   },
-  exceptionNotes:{
-    type:Array,
-    optional:true
+  exceptionNotes: {
+    type: Array,
+    optional: true
   },
-  "exceptionNotes.$":ExceptionNote,
+  fulfillmentChecklist: [fulfillmentChecklist],
+  "exceptionNotes.$": Notes,
   "workflow": {
     type: Workflow,
     optional: true,

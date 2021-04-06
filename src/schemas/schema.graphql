@@ -481,6 +481,9 @@ type OrderItem implements Node {
 
   "Delivery date selected by the system."
   deliveryDate: DateTime
+
+  picked: Boolean
+  packed: Boolean
 }
 
 """
@@ -594,6 +597,7 @@ type Order implements Node {
   "One or more fulfillment groups. Each of these are fulfilled and charged as separate orders."
   fulfillmentGroups: [OrderFulfillmentGroup]!
 
+  fulfillmentChecklist:[FulfillmentChecklistPayload]
   "Notes about the order. This will always return an array but it may be empty"
   notes: [OrderNote]!
 
@@ -650,6 +654,7 @@ type Order implements Node {
   requestedImageUrls:[String!]
   requestedVideoUrls:[String!]
 
+  exceptionNotes:[OrderNote!]
 }
 
 "A note about an order"
@@ -964,15 +969,15 @@ input UpdateOrderInput {
 
   "Set the current order status to this"
   status: String
-#
-#  preferredDeliveryDate:DateTime
-#
-#  deliveryUrgency :String
-#
-#  requestedImageUrls:[String!]
-#  requestedVideoUrls:[String!]
-#  notes:[OrderNote]!
-#  deliveryDate :DateTime
+  #
+  #  preferredDeliveryDate:DateTime
+  #
+  #  deliveryUrgency :String
+  #
+  #  requestedImageUrls:[String!]
+  #  requestedVideoUrls:[String!]
+  #  notes:[OrderNote]!
+  #  deliveryDate :DateTime
 }
 
 "Input for the updateOrderFulfillmentGroup mutation"
@@ -1164,4 +1169,28 @@ type AssignOrderToAccountPayload{
   fulfillmentManagerId: ID
   "ID of the account who is assigned as delivery representative"
   deliveryRepresentativeId: ID
+}
+
+type FulfillmentChecklistPayload{
+  name: String
+  key: String
+  state: Boolean
+}
+
+input FulfillmentChecklist{
+  name: String
+  key: String
+  state: Boolean
+}
+
+input OrderItemStatus{
+  orderItemId: String
+  picked: Boolean
+  packed: Boolean
+}
+
+input FulfillmentChecklistInput{
+  orderId:String!
+  checklist: FulfillmentChecklist
+  orderItem: OrderItemStatus
 }
