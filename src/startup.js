@@ -26,6 +26,9 @@ export default async function ordersStartup(context) {
 }
 
 function sendEmail(context, order) {
+  if(order.deliveryUrgency === "As soon as possible") {
+    order.preferredDeliveryDate = "As soon as possible";
+  }
   sendOrderEmail(context, order);
   if (support_email) {
     sendOrderEmail(context, Object.assign({}, order, { email: support_email }), "new-admin");
