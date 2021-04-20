@@ -81,6 +81,7 @@ export default async function buildOrderItem(context, { currencyCode, inputItem 
     productVendor: chosenProduct.vendor,
     imageURLs: (chosenVariant.primaryImage && chosenVariant.primaryImage.URLs) || (chosenProduct.primaryImage && chosenProduct.primaryImage.URLs),
     quantity,
+    description:chosenProduct.description,
     shopId: chosenProduct.shopId,
     subtotal: +accounting.toFixed(quantity * finalPrice, 3),
     title: chosenProduct.title,

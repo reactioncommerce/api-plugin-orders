@@ -1,6 +1,6 @@
 import resolveAccountFromAccountId from "@reactioncommerce/api-utils/graphql/resolveAccountFromAccountId.js";
 import resolveShopFromShopId from "@reactioncommerce/api-utils/graphql/resolveShopFromShopId.js";
-import { encodeCartOpaqueId, encodeOrderOpaqueId } from "../../xforms/id.js";
+import {encodeAccountOpaqueId, encodeCartOpaqueId, encodeOrderOpaqueId} from "../../xforms/id.js";
 import orderDisplayStatus from "./orderDisplayStatus.js";
 import orderSummary from "./orderSummary.js";
 import payments from "./payments.js";
@@ -19,5 +19,7 @@ export default {
   shop: resolveShopFromShopId,
   status: (node) => node.workflow.status,
   summary: (node, _, context) => orderSummary(context, node),
+  fulfillmentManager: (node)=>encodeAccountOpaqueId(node.fulfillmentManager),
+  deliveryRepresentative: (node)=>encodeAccountOpaqueId(node.deliveryRepresentative),
   totalItemQuantity
 };
