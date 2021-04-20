@@ -23,14 +23,22 @@ export default async function updateOrder(parentResult, { input }, context) {
     orderId,
     status,
     accountId,
-  } = input;
+    assignedTo,
+    notes,
+    preferredDeliveryDate,
+    alternativePhone
+} = input;
 
   const { order } = await context.mutations.updateOrder(context, {
     customFields,
     email,
     accountId: decodeAccountOpaqueId(accountId),
     orderId: decodeOrderOpaqueId(orderId),
-    status
+    status,
+    assignedTo,
+    notes,
+    preferredDeliveryDate,
+    alternativePhone
   });
 
   return {

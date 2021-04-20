@@ -1,7 +1,18 @@
 import SimpleSchema from "simpl-schema";
 import ReactionError from "@reactioncommerce/reaction-error";
-import { Order as OrderSchema } from "../simpleSchemas.js";
+import {Order as OrderSchema} from "../simpleSchemas.js";
 
+const noteInput = new SimpleSchema({
+  content: {
+    type: String,
+    optional: true
+  },
+  isModified: {
+    type: Boolean,
+    optional: true,
+    defaultValue:false
+  }
+});
 const inputSchema = new SimpleSchema({
   customFields: {
     type: Object,
@@ -18,6 +29,23 @@ const inputSchema = new SimpleSchema({
     optional: true,
   },
   status: {
+    type: String,
+    optional: true
+  },
+  assignedTo: {
+    type: String,
+    optional: true
+  },
+  notes: {
+    type: Array,
+    optional: true
+  },
+  "notes.$":noteInput,
+  preferredDeliveryDate:{
+    type:Date,
+    optional:true
+  },
+  alternativePhone: {
     type: String,
     optional: true
   }
@@ -39,20 +67,22 @@ export default async function updateOrder(context, input) {
     email,
     accountId,
     orderId,
-    // status,
-    // preferredDeliveryDate,
+    status,
+    assignedTo,
+    preferredDeliveryDate,
     // deliveryUrgency,
     // requestedImageUrls,
     // requestedVideoUrls,
-    // notes,
+    notes,
+    alternativePhone,
     // deliveryDate,
   } = input;
 
-  const { appEvents, collections, userId } = context;
-  const { Orders } = collections;
+  const {appEvents, collections, userId} = context;
+  const {Orders} = collections;
 
   // First verify that this order actually exists
-  const order = await Orders.findOne({ _id: orderId });
+  const order = await Orders.findOne({_id: orderId});
   if (!order) throw new ReactionError("not-found", "Order not found");
 
   // At this point, this mutation only updates the workflow status, which should not be allowed
@@ -60,8 +90,8 @@ export default async function updateOrder(context, input) {
   // permissions to see if order owner should be allowed.
   await context.validatePermissions(
     `reaction:legacy:orders:${order._id}`,
-    "update",
-    { shopId: order.shopId }
+    "update:deliveryInfo",
+    {shopId: order.shopId}
   );
 
   const modifier = {
@@ -70,20 +100,48 @@ export default async function updateOrder(context, input) {
     }
   };
 
-  if (email) modifier.$set.email = email;
-  if (accountId) modifier.$set.accountId = accountId;
+  switch (assignedTo) {
+    case "deliveryRepresentative":
+      if (order.deliveryRepresentative !== userId) {
+        throw new ReactionError("access-denied", "Order is not assigned to particular delivery representative.");
+      }
+      if (status && status !== "coreOrderWorkflow/shipped" && status !== "coreOrderWorkflow/completed" && status !== "coreOrderWorkflow/exception") {
+        throw new ReactionError("access-denied", `User cannot add ${status} status to order.`);
+      }
 
-  if (customFields) modifier.$set.customFields = customFields;
+      break;
 
+    case "fulfillmentManager":
+      if (order.fulfillmentManager !== userId) {
+        throw new ReactionError("access-denied", "Order is not assigned to particular delivery representative.");
+      }
+      if (email) modifier.$set.email = email;
+      if (customFields) modifier.$set.customFields = customFields;
+      if (alternativePhone) modifier.$set.alternativePhone = alternativePhone;
+      if (preferredDeliveryDate) {
+        modifier.$set.preferredDeliveryDate = preferredDeliveryDate;
+        modifier.$set.deliveryUrgency = "";
+      }
+      break;
 
+    default:
+      await context.validatePermissions(
+        `reaction:legacy:orders:${order._id}`,
+        "update",
+        {shopId: order.shopId}
+      );
+      if (email) modifier.$set.email = email;
+      if (accountId) modifier.$set.accountId = accountId;
+      if (customFields) modifier.$set.customFields = customFields;
+      if (alternativePhone) modifier.$set.alternativePhone = alternativePhone;
+      if (preferredDeliveryDate)
+      {
+        modifier.$set.preferredDeliveryDate = preferredDeliveryDate;
+        modifier.$set.deliveryUrgency = "";
+      }
+  }
 
-  // if (preferredDeliveryDate) modifier.$set.preferredDeliveryDate = preferredDeliveryDate;
-  // if (deliveryUrgency) modifier.$set.deliveryUrgency = deliveryUrgency;
-  // if (requestedImageUrls) modifier.$set.requestedImageUrls = requestedImageUrls;
-  // if (requestedVideoUrls) modifier.$set.requestedVideoUrls = requestedVideoUrls;
-  // if (notes) modifier.$set.notes = notes;
-  // if (deliveryDate) modifier.$set.deliveryDate = deliveryDate;
-
+  if (notes) modifier.$set.notes = getNotes(order.notes||[],notes,userId);
 
   if (status && order.workflow.status !== status) {
     modifier.$set["workflow.status"] = status;
@@ -93,14 +151,14 @@ export default async function updateOrder(context, input) {
   }
 
   // Skip updating if we have no updates to make
-  if (Object.keys(modifier.$set).length === 1) return { order };
+  if (Object.keys(modifier.$set).length === 1) return {order};
 
-  OrderSchema.validate(modifier, { modifier: true });
+  OrderSchema.validate(modifier, {modifier: true});
 
-  const { modifiedCount, value: updatedOrder } = await Orders.findOneAndUpdate(
-    { _id: orderId },
+  const {modifiedCount, value: updatedOrder} = await Orders.findOneAndUpdate(
+    {_id: orderId},
     modifier,
-    { returnOriginal: false }
+    {returnOriginal: false}
   );
   if (modifiedCount === 0 || !updatedOrder) throw new ReactionError("server-error", "Unable to update order");
 
@@ -109,14 +167,28 @@ export default async function updateOrder(context, input) {
     updatedBy: userId
   });
 
-  return { order: updatedOrder };
+  return {order: updatedOrder};
 }
 
-
-// preferredDeliveryDate,
-//     deliveryUrgency,
-// requestedImageUrls,
-//   requestedVideoUrls
-//   ,notes
-// deliveryDate
-// shipping
+function getNotes(oldNotes, newNotes, userId) {
+  let notes = [];
+  newNotes.map((newNote, index) => {
+      let note = {};
+      if (!newNote.isModified && index < oldNotes.length) {
+        note = {
+          content: oldNotes[index].content,
+          userId: oldNotes[index].userId,
+          updatedAt: oldNotes[index].updatedAt
+        };
+      } else {
+        note = {
+          content: newNote.content,
+          userId,
+          updatedAt: new Date()
+        };
+      }
+      notes.push(note);
+    }
+  )
+  return notes;
+}
