@@ -844,6 +844,10 @@ export const OrderItem = new SimpleSchema({
     type: SimpleSchema.Integer,
     min: 0
   },
+  description: {
+    type: String,
+    optional: true
+  },
   "shopId": String,
   "subtotal": Number,
   "imageURLs": {
@@ -863,12 +867,12 @@ export const OrderItem = new SimpleSchema({
   picked: {
     type: Boolean,
     optional: true,
-    defaultValue:false
+    defaultValue: false
   },
   packed: {
     type: Boolean,
     optional: true,
-    defaultValue:false
+    defaultValue: false
   },
   "workflow": {
     type: Workflow,
@@ -1133,6 +1137,36 @@ export const fulfillmentChecklist = new SimpleSchema({
   }
 })
 
+export const location = new SimpleSchema({
+  userId: {
+    type: String,
+    optional: true
+  },
+  name: {
+    type: String,
+    optional: true
+  },
+  latitude: {
+    type: String,
+    optional: true
+  },
+  longitude: {
+    type: String,
+    optional: true
+  },
+  altitude: {
+    type: String,
+    optional: true
+  },
+  createdAt: {
+    type: Date,
+    optional: true
+  },
+  updatedAt: {
+    type: Date,
+    optional: true
+  }
+})
 /**
  * @name Order Schema
  * @memberof Schemas
@@ -1292,6 +1326,19 @@ export const Order = new SimpleSchema({
     optional: true
   },
   "requestedVideoUrls.$": String,
+  signatureUrl: {
+    type: String,
+    optional: true
+  },
+  signedLocation: {
+    type: location,
+    optional: true
+  },
+  alternativePhone:{
+    type:String,
+    optional:true,
+    label:"Order's alternative phone number."
+  },
   "message": {
     type: String,
     optional: true,
@@ -1312,7 +1359,11 @@ export const Order = new SimpleSchema({
     type: Array,
     optional: true
   },
-  fulfillmentChecklist: [fulfillmentChecklist],
+  fulfillmentChecklist: {
+    type: Array,
+    optional: true
+  },
+  "fulfillmentChecklist.$": fulfillmentChecklist,
   "exceptionNotes.$": Notes,
   "workflow": {
     type: Workflow,
