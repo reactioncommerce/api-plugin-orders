@@ -27,8 +27,8 @@ export default async function updateOrder(parentResult, {input}, context) {
     notes,
     preferredDeliveryDate,
     alternativePhone,
-    imageRequestedDeclined = false,
-    videoRequestedDeclined = false
+    imageRequestedDeclined,
+    videoRequestedDeclined
   } = input;
 
   const {order} = await context.mutations.updateOrder(context, {

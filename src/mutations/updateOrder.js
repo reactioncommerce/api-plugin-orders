@@ -10,7 +10,7 @@ const noteInput = new SimpleSchema({
   isModified: {
     type: Boolean,
     optional: true,
-    defaultValue:false
+    defaultValue: false
   }
 });
 const inputSchema = new SimpleSchema({
@@ -40,10 +40,10 @@ const inputSchema = new SimpleSchema({
     type: Array,
     optional: true
   },
-  "notes.$":noteInput,
-  preferredDeliveryDate:{
-    type:Date,
-    optional:true
+  "notes.$": noteInput,
+  preferredDeliveryDate: {
+    type: Date,
+    optional: true
   },
   alternativePhone: {
     type: String,
@@ -143,16 +143,15 @@ export default async function updateOrder(context, input) {
       if (accountId) modifier.$set.accountId = accountId;
       if (customFields) modifier.$set.customFields = customFields;
       if (alternativePhone) modifier.$set.alternativePhone = alternativePhone;
-      if (preferredDeliveryDate)
-      {
+      if (preferredDeliveryDate) {
         modifier.$set.preferredDeliveryDate = preferredDeliveryDate;
         modifier.$set.deliveryUrgency = "";
       }
   }
 
-  if (notes) modifier.$set.notes = getNotes(order.notes||[],notes,userId);
-  if(imageRequestedDeclined!==order.imageRequestedDeclined) modifier.$set.imageRequestedDeclined = imageRequestedDeclined;
-  if(videoRequestedDeclined!==order.videoRequestedDeclined) modifier.$set.videoRequestedDeclined = videoRequestedDeclined;
+  if (notes) modifier.$set.notes = getNotes(order.notes || [], notes, userId);
+  if (imageRequestedDeclined != null && imageRequestedDeclined !== order.imageRequestedDeclined) modifier.$set.imageRequestedDeclined = imageRequestedDeclined;
+  if (videoRequestedDeclined != null && videoRequestedDeclined !== order.videoRequestedDeclined) modifier.$set.videoRequestedDeclined = videoRequestedDeclined;
 
   if (status && order.workflow.status !== status) {
     modifier.$set["workflow.status"] = status;
