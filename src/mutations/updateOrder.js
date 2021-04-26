@@ -48,6 +48,14 @@ const inputSchema = new SimpleSchema({
   alternativePhone: {
     type: String,
     optional: true
+  },
+  imageRequestedDeclined: {
+    type: Boolean,
+    optional: true
+  },
+  videoRequestedDeclined: {
+    type: Boolean,
+    optional: true
   }
 });
 
@@ -75,6 +83,8 @@ export default async function updateOrder(context, input) {
     // requestedVideoUrls,
     notes,
     alternativePhone,
+    imageRequestedDeclined,
+    videoRequestedDeclined,
     // deliveryDate,
   } = input;
 
@@ -108,7 +118,6 @@ export default async function updateOrder(context, input) {
       if (status && status !== "coreOrderWorkflow/shipped" && status !== "coreOrderWorkflow/completed" && status !== "coreOrderWorkflow/exception") {
         throw new ReactionError("access-denied", `User cannot add ${status} status to order.`);
       }
-
       break;
 
     case "fulfillmentManager":
@@ -142,6 +151,8 @@ export default async function updateOrder(context, input) {
   }
 
   if (notes) modifier.$set.notes = getNotes(order.notes||[],notes,userId);
+  if(imageRequestedDeclined!==order.imageRequestedDeclined) modifier.$set.imageRequestedDeclined = imageRequestedDeclined;
+  if(videoRequestedDeclined!==order.videoRequestedDeclined) modifier.$set.videoRequestedDeclined = videoRequestedDeclined;
 
   if (status && order.workflow.status !== status) {
     modifier.$set["workflow.status"] = status;

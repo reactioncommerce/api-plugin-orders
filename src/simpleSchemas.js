@@ -1330,6 +1330,14 @@ export const Order = new SimpleSchema({
     type: String,
     optional: true
   },
+  imageRequestedDeclined: {
+    type: Boolean,
+    optional: true
+  },
+  videoRequestedDeclined: {
+    type: Boolean,
+    optional: true
+  },
   signedLocation: {
     type: location,
     optional: true

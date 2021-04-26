@@ -666,6 +666,11 @@ type Order implements Node {
   "Permission Flag to take video while handing over the order."
   videoRequested:Boolean
 
+  "True if client declined to take image."
+  imageRequestedDeclined:Boolean
+
+  "True if client declined to take video."
+  videoRequestedDeclined:Boolean
 
   "List of image urls."
   requestedImageUrls:[String!]
@@ -1013,6 +1018,11 @@ input UpdateOrderInput {
   "Set the order notes."
   notes:[OrderNoteInput]
 
+  "Set true if client decline to take image."
+  imageRequestedDeclined:Boolean
+
+  "Set true if client decline to take video."
+  videoRequestedDeclined:Boolean
   #  deliveryUrgency :String
   #  requestedImageUrls:[String!]
   #  requestedVideoUrls:[String!]

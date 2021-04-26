@@ -1,4 +1,4 @@
-import { decodeOrderOpaqueId, decodeAccountOpaqueId } from "../../xforms/id.js";
+import {decodeOrderOpaqueId, decodeAccountOpaqueId} from "../../xforms/id.js";
 
 /**
  * @name Mutation/updateOrder
@@ -15,7 +15,7 @@ import { decodeOrderOpaqueId, decodeAccountOpaqueId } from "../../xforms/id.js";
  * @param {Object} context - an object containing the per-request state
  * @returns {Promise<Object>} UpdateOrderPayload
  */
-export default async function updateOrder(parentResult, { input }, context) {
+export default async function updateOrder(parentResult, {input}, context) {
   const {
     clientMutationId = null,
     customFields,
@@ -26,10 +26,12 @@ export default async function updateOrder(parentResult, { input }, context) {
     assignedTo,
     notes,
     preferredDeliveryDate,
-    alternativePhone
-} = input;
+    alternativePhone,
+    imageRequestedDeclined = false,
+    videoRequestedDeclined = false
+  } = input;
 
-  const { order } = await context.mutations.updateOrder(context, {
+  const {order} = await context.mutations.updateOrder(context, {
     customFields,
     email,
     accountId: decodeAccountOpaqueId(accountId),
@@ -38,7 +40,9 @@ export default async function updateOrder(parentResult, { input }, context) {
     assignedTo,
     notes,
     preferredDeliveryDate,
-    alternativePhone
+    alternativePhone,
+    imageRequestedDeclined,
+    videoRequestedDeclined
   });
 
   return {
