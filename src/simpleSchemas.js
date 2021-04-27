@@ -48,6 +48,37 @@ const Metafield = new SimpleSchema({
   }
 });
 
+export const location = new SimpleSchema({
+  userId: {
+    type: String,
+    optional: true
+  },
+  name: {
+    type: String,
+    optional: true
+  },
+  latitude: {
+    type: String,
+    optional: true
+  },
+  longitude: {
+    type: String,
+    optional: true
+  },
+  altitude: {
+    type: String,
+    optional: true
+  },
+  createdAt: {
+    type: Date,
+    optional: true
+  },
+  updatedAt: {
+    type: Date,
+    optional: true
+  }
+})
+
 /**
  * @name OrderAddress
  * @memberof Schemas
@@ -156,6 +187,11 @@ export const OrderAddress = new SimpleSchema({
     defaultValue: false,
     optional: true
   },
+  locations:{
+    type:Array,
+    optional:true
+  },
+  "locations.$":location,
   "metafields": {
     type: Array,
     optional: true
@@ -1137,36 +1173,6 @@ export const fulfillmentChecklist = new SimpleSchema({
   }
 })
 
-export const location = new SimpleSchema({
-  userId: {
-    type: String,
-    optional: true
-  },
-  name: {
-    type: String,
-    optional: true
-  },
-  latitude: {
-    type: String,
-    optional: true
-  },
-  longitude: {
-    type: String,
-    optional: true
-  },
-  altitude: {
-    type: String,
-    optional: true
-  },
-  createdAt: {
-    type: Date,
-    optional: true
-  },
-  updatedAt: {
-    type: Date,
-    optional: true
-  }
-})
 /**
  * @name Order Schema
  * @memberof Schemas

@@ -158,6 +158,15 @@ export default async function updateOrder(context, input) {
     modifier.$push = {
       "workflow.workflow": status
     };
+    order.shipping.map((data,index)=>{
+      modifier.$set[`shipping.${index}.workflow.status`] = status;
+      modifier.$push = {
+        [`shipping.${index}.workflow.workflow`]: status
+      };
+      modifier.$set[`shipping.${index}.updatedAt`] = new Date();
+    })
+    modifier.$set.updatedAt = new Date();
+
   }
 
   // Skip updating if we have no updates to make
