@@ -9,5 +9,9 @@ import sendOrderEmail from "./util/sendOrderEmail.js";
 export default function ordersStartup(context) {
   const { appEvents } = context;
 
-  appEvents.on("afterOrderCreate", ({ order }) => sendOrderEmail(context, order));
+  appEvents.on("afterOrderCreate", ({ order }) => {
+    console.log("Demo on hooks");
+    console.log("this is an order");
+    console.log(order);
+    sendOrderEmail(context, order)});
 }
