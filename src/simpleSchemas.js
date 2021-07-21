@@ -164,7 +164,37 @@ export const OrderAddress = new SimpleSchema({
     type: Metafield
   }
 });
-
+export const Geolocation = new SimpleSchema({
+  "latitude": {
+    type: Number
+  },
+  "longitude": {
+    type: Number
+  }
+ })
+ export const CustomOrderAddress = new SimpleSchema({
+  "_id": {
+    type: String,
+    optional: true
+  },
+  "description":{
+    type:String,
+    label: "Description"
+  },
+  "reference":{
+    type:String,
+    label:"Reference",
+    optional:true
+  },
+  "address":{
+    type:String,
+    label:"Address"
+  },
+  "geolocation":{
+    type:Geolocation,
+    label:"geolocation"
+  }
+ });
 /**
  * @name ShippingParcel
  * @memberof Schemas
@@ -318,7 +348,7 @@ export const CommonOrder = new SimpleSchema({
     optional: true
   },
   billingAddress: {
-    type: OrderAddress,
+    type: CustomOrderAddress,
     optional: true
   },
   cartId: {
@@ -341,11 +371,11 @@ export const CommonOrder = new SimpleSchema({
     optional: true
   },
   originAddress: {
-    type: OrderAddress,
+    type: CustomOrderAddress,
     optional: true
   },
   shippingAddress: {
-    type: OrderAddress,
+    type: CustomOrderAddress,
     optional: true
   },
   shopId: String,
@@ -403,7 +433,7 @@ export const orderInputSchema = new SimpleSchema({
   // some tax services require it to calculate taxes for digital items. Thus
   // it should be provided here in order to be added to the CommonOrder if possible.
   "billingAddress": {
-    type: OrderAddress,
+    type: CustomOrderAddress,
     optional: true
   },
   "cartId": {
@@ -439,7 +469,7 @@ export const paymentInputSchema = new SimpleSchema({
   amount: Number,
   // Optionally override the order.billingAddress for each payment
   billingAddress: {
-    type: OrderAddress,
+    type: CustomOrderAddress,
     optional: true
   },
   data: {
@@ -820,7 +850,7 @@ const SelectedFulfillmentOption = new SimpleSchema({
 export const OrderFulfillmentGroup = new SimpleSchema({
   "_id": String,
   "address": {
-    type: OrderAddress,
+    type: CustomOrderAddress,
     optional: true
   },
   "customsLabelUrl": {
@@ -936,7 +966,7 @@ export const Payment = new SimpleSchema({
     label: "Payment Id"
   },
   "address": {
-    type: OrderAddress,
+    type: CustomOrderAddress,
     optional: true
   },
   "amount": Number,
@@ -1031,7 +1061,7 @@ export const Order = new SimpleSchema({
   // some tax services require it to calculate taxes for digital items. Thus
   // it should be provided here in order to be added to the CommonOrder if possible.
   "billingAddress": {
-    type: OrderAddress,
+    type: CustomOrderAddress,
     optional: true
   },
   "cartId": {

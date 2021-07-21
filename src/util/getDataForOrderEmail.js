@@ -56,29 +56,20 @@ export default async function getDataForOrderEmailDefault(context, { order }) {
   const { address: paymentBillingAddress, currency } = firstPayment || {};
 
   const shippingAddressForEmail = shippingAddress ? {
-    address: `${shippingAddress.address1}${shippingAddress.address2 ? ` ${shippingAddress.address2}` : ""}`,
-    city: shippingAddress.city,
-    fullName: shippingAddress.fullName,
-    postal: shippingAddress.postal,
-    region: shippingAddress.region
+    address: `${shippingAddress.address}${shippingAddress.address ? ` ${shippingAddress.address}` : ""}`,
+    description: shippingAddress.description
   } : null;
 
   let billingAddressForEmail = null;
   if (order.billingAddress) {
     billingAddressForEmail = {
-      address: `${order.billingAddress.address1}${order.billingAddress.address2 ? ` ${order.billingAddress.address2}` : ""}`,
-      city: order.billingAddress.city,
-      fullName: order.billingAddress.fullName,
-      postal: order.billingAddress.postal,
-      region: order.billingAddress.region
+      address: `${order.billingAddress.address}${order.billingAddress.address ? ` ${order.billingAddress.address}` : ""}`,
+      description: order.billingAddress.description
     };
   } else if (paymentBillingAddress) {
     billingAddressForEmail = {
-      address: `${paymentBillingAddress.address1}${paymentBillingAddress.address2 ? ` ${paymentBillingAddress.address2}` : ""}`,
-      city: paymentBillingAddress.city,
-      fullName: paymentBillingAddress.fullName,
-      postal: paymentBillingAddress.postal,
-      region: paymentBillingAddress.region
+      address: `${paymentBillingAddress.address}${paymentBillingAddress.address ? ` ${paymentBillingAddress.address}` : ""}`,
+      description: paymentBillingAddress.description
     };
   }
 
@@ -164,7 +155,7 @@ export default async function getDataForOrderEmailDefault(context, { order }) {
 
   const physicalAddress = (shop.addressBook && shop.addressBook[0]) || null;
   if (physicalAddress) {
-    physicalAddress.address = `${physicalAddress.address1}${physicalAddress.address2 ? ` ${physicalAddress.address2}` : ""}`;
+    physicalAddress.address = `${physicalAddress.address}${physicalAddress.address ? ` ${physicalAddress.address}` : ""}`;
   }
 
   // Merge data into single object to pass to email template

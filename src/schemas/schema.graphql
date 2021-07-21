@@ -457,7 +457,7 @@ Extra data for an order fulfillment group with type `shipping`
 """
 type ShippingOrderFulfillmentGroupData {
   "The address to ship to"
-  shippingAddress: Address!
+  shippingAddress: CustomAddress!
 }
 
 "Extra data for an order fulfillment group"
@@ -658,7 +658,7 @@ input OrderFulfillmentGroupItemInput {
 "Information needed by the selected fulfillment method to properly fulfill the order"
 input OrderFulfillmentGroupDataInput {
   "The mailing address to which this fulfillment group should be shipped"
-  shippingAddress: AddressInput
+  shippingAddress: CustomAddressInput
 }
 
 "Input for an `OrderFulfillmentGroup`"
@@ -766,7 +766,7 @@ input PaymentInput {
   authorization without one, so be sure that client UI code is aware of which payment methods
   require collecting one.
   """
-  billingAddress: AddressInput
+  billingAddress: CustomAddressInput
 
   "Any additional user-provided input necessary to authorize and capture the payment"
   data: JSONObject
