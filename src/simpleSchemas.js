@@ -47,6 +47,23 @@ const Metafield = new SimpleSchema({
     optional: true
   }
 });
+const ImageSizes = new SimpleSchema({
+  "large":{
+    type: String
+  },
+   "medium":{
+    type: String
+  },
+  "original":{
+    type: String
+  },
+  "small":{
+    type: String
+  },
+  "thumbnail":{
+    type: String
+  },
+});
 
 /**
  * @name OrderAddress
@@ -735,6 +752,9 @@ export const OrderItem = new SimpleSchema({
   },
   "history.$": {
     type: History
+  },
+  "imageURLs":{
+    type:ImageSizes
   },
   "optionTitle": {
     type: String,

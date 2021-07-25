@@ -81,6 +81,7 @@ export default async function buildOrderItem(context, { currencyCode, inputItem,
     productType: chosenProduct.type,
     productTagIds: chosenProduct.tagIds,
     productVendor: chosenProduct.vendor,
+    imageURLs:chosenProduct.primaryImage.URLs,
     quantity,
     shopId: chosenProduct.shopId,
     subtotal: +accounting.toFixed(quantity * finalPrice, 3),
@@ -90,7 +91,7 @@ export default async function buildOrderItem(context, { currencyCode, inputItem,
     variantTitle: chosenVariant.title,
     workflow: { status: "new", workflow: ["coreOrderWorkflow/created", "coreItemWorkflow/removedFromInventoryAvailableToSell"] }
   };
-
+  console.log(newItem);
   let cartItem;
   if (cart && cart.items.length) {
     cartItem = cart.items.find((cItem) => cItem.productId === newItem.productId);
