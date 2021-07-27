@@ -23,6 +23,7 @@ export default async function sendOrderEmail(context, order, action) {
   }
   console.log("order is:", order.payments[0].data);
   console.log("dataforEmail is:", dataForEmail);
+  console.log("payments is,", dataForEmail.billing.payments);
 
   const language = await getLanguageForOrder(context, order);
 
