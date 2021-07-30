@@ -7,7 +7,51 @@ const withoutCodeCountries = ["AO", "AG", "AW", "BS", "BZ", "BJ", "BW",
   "MS", "NR", "AN", "NU", "KP", "PA", "QA", "RW", "KN", "LC",
   "ST", "SA", "SC", "SL", "SB", "SO", "SR", "SY", "TZ", "TL",
   "TK", "TO", "TT", "TV", "UG", "AE", "VU", "YE", "ZW"];
-
+/**
+ * @name Billing
+ * @memberof Schemas
+ * @type {SimpleSchema}
+ * @property {String} customerName optional
+ * @property {String} nit optional
+ * @property {String} address optional
+ */
+ export const BillingDetails = new SimpleSchema({
+  customerName: {
+      type: String,
+      optional: true
+  },
+  nit:{
+      type: String,
+      max: 9,
+      optional: true
+  },
+  address:{
+      type: String,
+      optional:true
+  }
+});
+/**
+ * @name Gift
+ * @memberof Schemas
+ * @type {SimpleSchema}
+ * @property {String} sender optional
+ * @property {String} receiver optional
+ * @property {String} message optional
+ */
+ export const Gift = new SimpleSchema({
+  sender: {
+      type: String,
+      optional:true
+  },
+  receiver: {
+      type: String,
+      optional:true
+  },
+  message: {
+      type: String,
+      optional:true
+  }
+});
 /**
  * @name Metafield
  * @memberof Schemas
@@ -209,7 +253,8 @@ export const Geolocation = new SimpleSchema({
   },
   "geolocation":{
     type:Geolocation,
-    label:"geolocation"
+    label:"geolocation",
+    optional:true
   }
  });
 /**
@@ -479,7 +524,15 @@ export const orderInputSchema = new SimpleSchema({
     type: String,
     optional: true
   },
-  "shopId": String
+  "shopId": String,
+  "billing":{
+    type:BillingDetails,
+    optional:true
+  },
+  "giftNote":{
+    type:Gift,
+    optional:true
+  }
 });
 
 export const paymentInputSchema = new SimpleSchema({
@@ -1062,6 +1115,8 @@ export const Payment = new SimpleSchema({
  * @property {OrderTransaction[]} transactions optional
  * @property {Date} updatedAt optional
  * @property {Workflow} workflow optional
+ * @property {BillingDetails} billing optional
+ * @property {GiftNote} giftNote optional
  */
 export const Order = new SimpleSchema({
   "_id": {
@@ -1164,6 +1219,19 @@ export const Order = new SimpleSchema({
     type: Workflow,
     optional: true,
     defaultValue: {}
+  },
+  "billing":{
+    type: BillingDetails,
+    optional: true,
+    defaultValue: {
+      nit:"C/F",
+      customerName:"C/F",
+      address:"C/F"
+    }
+  },
+  "giftNote":{
+    type:Gift,
+    optional: true
   }
 });
 

@@ -124,7 +124,9 @@ export default async function placeOrder(context, input) {
     email,
     fulfillmentGroups,
     ordererPreferredLanguage,
-    shopId
+    shopId,
+    billing,
+    giftNote
   } = orderInput;
   const { accountId, appEvents, collections, getFunctionsOfType, userId } = context;
   const { Orders, Cart } = collections;
@@ -229,7 +231,9 @@ export default async function placeOrder(context, input) {
     workflow: {
       status: "new",
       workflow: ["new"]
-    }
+    },
+    billing,
+    giftNote
   };
 
   if (fullToken) {

@@ -67,7 +67,17 @@ test("places an anonymous $0 order with no cartId and no payments", async () => 
       }),
       selectedFulfillmentMethodId,
       totalPrice: 0
-    })
+    }),
+    giftNote:{
+      sender:"John",
+      receiver:"Doe",
+      message:"Gift message!!!"
+    },
+    billing:{
+      customerName: "John Doe",
+      nit:"1234567-8",
+      address: "ciudad"
+    }
   });
 
   const { orders, token } = await placeOrder(mockContext, {
