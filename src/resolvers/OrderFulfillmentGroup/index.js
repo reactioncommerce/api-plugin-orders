@@ -11,6 +11,9 @@ export default {
     if (node.type === "shipping") {
       return { gqlType: "ShippingOrderFulfillmentGroupData", shippingAddress: node.address };
     }
+    if (node.type === "pickup") {
+      return { gqlType: "PickupOrderFulfillmentGroupData", pickupDetails: node.pickupDetails }
+    }
     return null;
   },
   displayStatus: (node, { language }, context) => fulfillmentGroupDisplayStatus(context, node, language),
