@@ -823,6 +823,15 @@ export const OrderItem = new SimpleSchema({
     type: String,
     optional: true
   },
+  "odooProduct": {
+    type: Number,
+    optional: true
+  },
+  "categoryVariant": {
+    type: Number,
+    optional: true
+  },
+  "_id":
   "productType": {
     label: "Product Type",
     type: String,

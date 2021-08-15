@@ -400,6 +400,11 @@ type OrderItem implements Node {
   "The product's slug"
   productSlug: String
 
+  "Product on the invoice system"
+  odooProduct: Int
+  "category on the invoice system"
+  categoryVariant: Int
+
   "The list of tags that have been applied to this product"
   productTags(
     "Return only results that come after this cursor. Use this with `first` to specify the number of results to return."
