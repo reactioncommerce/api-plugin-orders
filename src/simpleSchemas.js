@@ -831,7 +831,6 @@ export const OrderItem = new SimpleSchema({
     type: Number,
     optional: true
   },
-  "_id":
   "productType": {
     label: "Product Type",
     type: String,
