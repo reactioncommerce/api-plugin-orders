@@ -11,9 +11,10 @@ const withoutCodeCountries = ["AO", "AG", "AW", "BS", "BZ", "BJ", "BW",
  * @name Billing
  * @memberof Schemas
  * @type {SimpleSchema}
- * @property {String} customerName optional
+ * @property {String} name optional
  * @property {String} nit optional
  * @property {String} address optional
+ * @property {Boolean} isCf optional
  */
  export const BillingDetails = new SimpleSchema({
   "name": {
