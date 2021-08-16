@@ -1237,16 +1237,13 @@ export const Order = new SimpleSchema({
     optional: true,
     defaultValue: {
       nit:"C/F",
-      customerName:"C/F",
-      address:"C/F"
+      name:"C/F",
+      address:"C/F",
+      isCf: true
     }
   },
   "giftNote":{
     type:Gift,
-    optional: true
-  },
-  "billing":{
-    type: Object,
     optional: true
   }
 });
