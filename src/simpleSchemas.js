@@ -16,19 +16,19 @@ const withoutCodeCountries = ["AO", "AG", "AW", "BS", "BZ", "BJ", "BW",
  * @property {String} address optional
  */
  export const BillingDetails = new SimpleSchema({
-  customerName: {
+  "name": {
       type: String,
       optional: true
   },
-  nit:{
+  "nit":{
       type: String,
       optional: true
   },
-  address:{
+  "address":{
       type: String,
       optional:true
   },
-  isCf:{
+  "isCf":{
     type: Boolean,
     optional: true
   }
