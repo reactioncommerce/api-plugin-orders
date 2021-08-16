@@ -115,7 +115,7 @@ export default async function placeOrder(context, input) {
   const cleanedInput = inputSchema.clean(input); // add default values and such
   inputSchema.validate(cleanedInput);
 
-  const { order: orderInput, payments: paymentsInput } = cleanedInput;
+  const { order: orderInput, payments: paymentsInput, billing, giftNote } = cleanedInput;
   const {
     billingAddress,
     cartId,
@@ -124,9 +124,7 @@ export default async function placeOrder(context, input) {
     email,
     fulfillmentGroups,
     ordererPreferredLanguage,
-    shopId,
-    billing,
-    giftNote
+    shopId
   } = orderInput;
   const { accountId, appEvents, collections, getFunctionsOfType, userId } = context;
   const { Orders, Cart } = collections;

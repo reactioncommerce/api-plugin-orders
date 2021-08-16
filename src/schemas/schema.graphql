@@ -328,6 +328,39 @@ type OrderItemAttribute {
   value: String
 }
 
+"Attribute of the gift"
+type Gift {
+  "The sender value"
+  sender: String
+
+  "The receiver value"
+  receiver: String
+  
+  "The message value"
+  message: String
+}
+"Attribute of the billing"
+type BillingOrder {
+  "The name of the customer"
+  customerName: String
+
+  "The nit value"
+  nit: String
+  
+  "The address value"
+  address: String
+
+  "check of the final consumer"
+  isCf: Boolean
+}
+"One attribute of an order item"
+type OrderItemAttribute {
+  "The attribute label, e.g., Color"
+  label: String
+
+  "The attribute value, e.g., Blue"
+  value: String
+}
 "A summary of the totals for this order"
 type OrderSummary {
   "The total of all discounts applied, as a positive number"
@@ -603,6 +636,12 @@ type Order implements Node {
 
   "The date and time at which this order was last updated"
   updatedAt: DateTime!
+  
+  "Json to billing"
+  billing: BillingOrder
+
+  "Json to gift"
+  giftNote: Gift
 }
 
 "A note about an order"
@@ -849,6 +888,12 @@ input PlaceOrderInput {
   method where the `amount` field is `null` will be charged the remainder due.
   """
   payments: [PaymentInput]
+  
+  "Json to billing"
+  billing: BillingOrder
+
+  "Json to gift"
+  giftNote: Gift
 }
 
 "Input for the moveOrderItems mutation"

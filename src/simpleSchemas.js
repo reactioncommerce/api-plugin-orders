@@ -22,12 +22,15 @@ const withoutCodeCountries = ["AO", "AG", "AW", "BS", "BZ", "BJ", "BW",
   },
   nit:{
       type: String,
-      max: 9,
       optional: true
   },
   address:{
       type: String,
       optional:true
+  },
+  isCf:{
+    type: Boolean,
+    optional: true
   }
 });
 /**
@@ -1239,6 +1242,10 @@ export const Order = new SimpleSchema({
   },
   "giftNote":{
     type:Gift,
+    optional: true
+  },
+  "billing":{
+    type: Object,
     optional: true
   }
 });
