@@ -628,12 +628,6 @@ type Order implements Node {
 
   "The date and time at which this order was last updated"
   updatedAt: DateTime!
-  
-  "Json to billing"
-  billing: BillingOrder
-
-  "Json to gift"
-  giftNote: Gift
 }
 
 "A note about an order"
