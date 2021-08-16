@@ -876,10 +876,10 @@ input PlaceOrderInput {
   payments: [PaymentInput]
   
   "Json to billing"
-  billing: BillingOrder
+  billing: JSONObject
 
   "Json to gift"
-  giftNote: Gift
+  giftNote: JSONObject
 }
 
 "Input for the moveOrderItems mutation"
