@@ -19,7 +19,7 @@ import {
  * @returns {Promise<Object>} PlaceOrderPayload
  */
 export default async function placeOrder(parentResult, { input }, context) {
-  const { clientMutationId = null, order, payments } = input;
+  const { clientMutationId = null, order, payments, billing, giftNote } = input;
   const { cartId: opaqueCartId, fulfillmentGroups, shopId: opaqueShopId } = order;
 
   const cartId = opaqueCartId ? decodeCartOpaqueId(opaqueCartId) : null;
@@ -39,7 +39,9 @@ export default async function placeOrder(parentResult, { input }, context) {
       fulfillmentGroups: transformedFulfillmentGroups,
       shopId
     },
-    payments
+    payments,
+    billing,
+     giftNote
   });
 
   return {
