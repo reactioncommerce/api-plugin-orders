@@ -113,6 +113,8 @@ async function createPayments({
  */
 export default async function placeOrder(context, input) {
   const {billing, giftNote} = input;
+  delete input.billing;
+  delete input.giftNote;
   const cleanedInput = inputSchema.clean(input); // add default values and such
   inputSchema.validate(cleanedInput);
   const { order: orderInput, payments: paymentsInput } = cleanedInput;
