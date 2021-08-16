@@ -20,9 +20,6 @@ import {
  */
 export default async function placeOrder(parentResult, { input }, context) {
   const { clientMutationId = null, order, payments, billing, giftNote } = input;
-  console.log("input",input);
-  console.log("billing",billing);
-  console.log("giftNote",giftNote);
   const { cartId: opaqueCartId, fulfillmentGroups, shopId: opaqueShopId } = order;
 
   const cartId = opaqueCartId ? decodeCartOpaqueId(opaqueCartId) : null;

@@ -6,7 +6,7 @@ import ReactionError from "@reactioncommerce/reaction-error";
 import getAnonymousAccessToken from "@reactioncommerce/api-utils/getAnonymousAccessToken.js";
 import buildOrderFulfillmentGroupFromInput from "../util/buildOrderFulfillmentGroupFromInput.js";
 import verifyPaymentsMatchOrderTotal from "../util/verifyPaymentsMatchOrderTotal.js";
-import { Order as OrderSchema, orderInputSchema, Payment as PaymentSchema, paymentInputSchema } from "../simpleSchemas.js";
+import { Order as OrderSchema, orderInputSchema, Payment as PaymentSchema, paymentInputSchema, BillingDetails, Gift } from "../simpleSchemas.js";
 
 const inputSchema = new SimpleSchema({
   "order": orderInputSchema,
@@ -14,6 +14,8 @@ const inputSchema = new SimpleSchema({
     type: Array,
     optional: true
   },
+  "billing": BillingDetails,
+  "giftNote": Gift,
   "payments.$": paymentInputSchema
 });
 
@@ -114,10 +116,7 @@ async function createPayments({
 export default async function placeOrder(context, input) {
   const cleanedInput = inputSchema.clean(input); // add default values and such
   inputSchema.validate(cleanedInput);
-  console.log("cleanedInput", cleanedInput)
   const { order: orderInput, payments: paymentsInput, billing, giftNote } = cleanedInput;
-  console.log("billing", billing)
-  console.log("giftNote", giftNote)
   const {
     billingAddress,
     cartId,
