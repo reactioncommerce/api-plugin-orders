@@ -6,7 +6,7 @@ import ReactionError from "@reactioncommerce/reaction-error";
 import getAnonymousAccessToken from "@reactioncommerce/api-utils/getAnonymousAccessToken.js";
 import buildOrderFulfillmentGroupFromInput from "../util/buildOrderFulfillmentGroupFromInput.js";
 import verifyPaymentsMatchOrderTotal from "../util/verifyPaymentsMatchOrderTotal.js";
-import { Order as OrderSchema, orderInputSchema, Payment as PaymentSchema, paymentInputSchema } from "../simpleSchemas.js";
+import { Order as OrderSchema, orderInputSchema, Payment as PaymentSchema, paymentInputSchema, BillingDetails, Gift } from "../simpleSchemas.js";
 
 const inputSchema = new SimpleSchema({
   "order": orderInputSchema,
@@ -14,6 +14,8 @@ const inputSchema = new SimpleSchema({
     type: Array,
     optional: true
   },
+  "billing": BillingDetails,
+  "giftNote": Gift,
   "payments.$": paymentInputSchema
 });
 
@@ -112,12 +114,12 @@ async function createPayments({
  * @returns {Promise<Object>} Object with `order` property containing the created order
  */
 export default async function placeOrder(context, input) {
-  const {billing, giftNote} = input;
-  delete input.billing;
-  delete input.giftNote;
+  console.log("limpiara", input)
   const cleanedInput = inputSchema.clean(input); // add default values and such
+  console.log("limpiara", cleanedInput)
   inputSchema.validate(cleanedInput);
-  const { order: orderInput, payments: paymentsInput } = cleanedInput;
+  console.log("paso la validacion")
+  const { order: orderInput, payments: paymentsInput, billing, giftNote } = cleanedInput;
   const {
     billingAddress,
     cartId,
@@ -280,7 +282,7 @@ export default async function placeOrder(context, input) {
   } else {
     order.customFields = customFieldsFromClient;
   }
-
+  console.log("validar aca el schema de order")
   // Validate and save
   OrderSchema.validate(order);
   await Orders.insertOne(order);
