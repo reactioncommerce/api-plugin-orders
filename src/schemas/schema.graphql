@@ -353,14 +353,6 @@ type BillingOrder {
   "check of the final consumer"
   isCf: Boolean
 }
-"One attribute of an order item"
-type OrderItemAttribute {
-  "The attribute label, e.g., Color"
-  label: String
-
-  "The attribute value, e.g., Blue"
-  value: String
-}
 "A summary of the totals for this order"
 type OrderSummary {
   "The total of all discounts applied, as a positive number"
