@@ -248,8 +248,7 @@ export default async function placeOrder(context, input) {
       workflow: ["new"]
     },
     billing,
-    giftNote,
-    idOdooBilling
+    giftNote
   };
 
   const idOdooBilling = await createOdooBilling(context, order);
