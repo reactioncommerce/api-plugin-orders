@@ -536,6 +536,9 @@ export const orderInputSchema = new SimpleSchema({
   "giftNote":{
     type:Gift,
     optional:true
+  },
+  "":{
+
   }
 });
 
@@ -1129,6 +1132,7 @@ export const Payment = new SimpleSchema({
  * @property {Workflow} workflow optional
  * @property {BillingDetails} billing optional
  * @property {GiftNote} giftNote optional
+ * @property {Number} idOdooBilling optional
  */
 export const Order = new SimpleSchema({
   "_id": {
@@ -1245,6 +1249,11 @@ export const Order = new SimpleSchema({
   "giftNote":{
     type:Gift,
     optional: true
+  },
+  "idOdooBilling":{
+    type: Number,
+    optional: true,
+    defaultValue: 0
   }
 });
 

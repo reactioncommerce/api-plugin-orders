@@ -77,7 +77,8 @@ test("places an anonymous $0 order with no cartId and no payments", async () => 
       customerName: "John Doe",
       nit:"1234567-8",
       address: "ciudad"
-    }
+    },
+    "idOdooBilling": 0
   });
 
   const { orders, token } = await placeOrder(mockContext, {
