@@ -536,9 +536,6 @@ export const orderInputSchema = new SimpleSchema({
   "giftNote":{
     type:Gift,
     optional:true
-  },
-  "":{
-
   }
 });
 
