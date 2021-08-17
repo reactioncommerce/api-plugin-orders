@@ -26,8 +26,10 @@ const inputSchema = new SimpleSchema({
  */
 async function createOdooBilling(context, order){
   try {
+    console.log("create odooo");
     return await context.mutations.getOdooInvoice(context, order);
   } catch (error) {
+    console.log(error);
     Logger.error("createOrder: error creating billing", error.message);
     return 0;
   } 
