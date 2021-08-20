@@ -130,7 +130,9 @@ async function createPayments({
  * @returns {Promise<Object>} Object with `order` property containing the created order
  */
 export default async function placeOrder(context, input) {
+  console.log("input",input);
   const cleanedInput = inputSchema.clean(input); // add default values and such
+  console.log("cleanedInput",cleanedInput);
   inputSchema.validate(cleanedInput);
   const { order: orderInput, payments: paymentsInput, billing, giftNote } = cleanedInput;
   const {
