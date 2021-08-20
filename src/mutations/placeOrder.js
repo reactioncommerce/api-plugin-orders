@@ -26,10 +26,8 @@ const inputSchema = new SimpleSchema({
  */
 async function createOdooBilling(context, order){
   try {
-    console.log("create odooo");
     return await context.mutations.getOdooInvoice(context, order);
   } catch (error) {
-    console.log(error);
     Logger.error("createOrder: error creating billing", error.message);
     return 0;
   } 
@@ -130,9 +128,7 @@ async function createPayments({
  * @returns {Promise<Object>} Object with `order` property containing the created order
  */
 export default async function placeOrder(context, input) {
-  console.log("input",input);
   const cleanedInput = inputSchema.clean(input); // add default values and such
-  console.log("cleanedInput",cleanedInput);
   inputSchema.validate(cleanedInput);
   const { order: orderInput, payments: paymentsInput, billing, giftNote } = cleanedInput;
   const {
@@ -300,7 +296,6 @@ export default async function placeOrder(context, input) {
   } else {
     order.customFields = customFieldsFromClient;
   }
-  console.log("validar aca el schema de order")
   // Validate and save
   OrderSchema.validate(order);
   await Orders.insertOne(order);
