@@ -249,8 +249,9 @@ export default async function placeOrder(context, input) {
     giftNote
   };
 
-  const idOdooBilling = await createOdooBilling(context, order);
-  order["idOdooBilling"] = idOdooBilling;
+  const odooObject = await createOdooBilling(context, order);
+  order["idOdooBilling"] = odooObject.order.id;
+  order["billing"]["partnerId"] = odooObject.id;
 
   if (fullToken) {
     const dbToken = { ...fullToken };
