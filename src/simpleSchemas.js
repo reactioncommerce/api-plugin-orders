@@ -32,6 +32,10 @@ const withoutCodeCountries = ["AO", "AG", "AW", "BS", "BZ", "BJ", "BW",
   "isCf":{
     type: Boolean,
     optional: true
+  },
+  "partnerId":{
+    type: Number,
+    optional: true
   }
 });
 /**
