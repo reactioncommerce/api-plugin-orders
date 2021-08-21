@@ -352,6 +352,9 @@ type BillingOrder {
 
   "check of the final consumer"
   isCf: Boolean
+
+  "Id of the customer on Invoice system"
+  partnerId: Int
 }
 "A summary of the totals for this order"
 type OrderSummary {

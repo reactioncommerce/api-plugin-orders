@@ -1240,7 +1240,8 @@ export const Order = new SimpleSchema({
       nit:"C/F",
       name:"C/F",
       address:"C/F",
-      isCf: true
+      isCf: true,
+      partnerId: -1
     }
   },
   "giftNote":{
