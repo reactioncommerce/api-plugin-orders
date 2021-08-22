@@ -250,15 +250,9 @@ export default async function placeOrder(context, input) {
   };
 
   const odooObject = await createOdooBilling(context, order);
-  console.log("odooObject", odooObject);
   if(odooObject){
-    if(odooObject.order){
-      order["idOdooBilling"] = odooObject.order.id;
-      order["billing"]["partnerId"] = odooObject.id;
-    }else{
-      order["idOdooBilling"] = -1;
-      order["billing"]["partnerId"] = -1;
-    }
+    order["idOdooBilling"] = odooObject.id;
+    order["billing"]["partnerId"] = odooObject.partner_id;
   }else{
     order["idOdooBilling"] = -1;
     order["billing"]["partnerId"] = -1;
