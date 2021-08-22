@@ -250,6 +250,7 @@ export default async function placeOrder(context, input) {
   };
 
   const odooObject = await createOdooBilling(context, order);
+  console.log("odooObject", odooObject);
   if(odooObject){
     order["idOdooBilling"] = odooObject.id;
     order["billing"]["partnerId"] = odooObject.partner_id;
