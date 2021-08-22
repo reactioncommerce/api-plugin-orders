@@ -29,7 +29,7 @@ async function createOdooBilling(context, order){
     return await context.mutations.getOdooInvoice(context, order);
   } catch (error) {
     Logger.error("createOrder: error creating billing", error.message);
-    return {order:{id:-1}, id:-1};
+    return {partner_id:-1, id:-1};
   } 
 }
 
@@ -250,7 +250,6 @@ export default async function placeOrder(context, input) {
   };
 
   const odooObject = await createOdooBilling(context, order);
-  console.log("odooObject", odooObject);
   if(odooObject){
     order["idOdooBilling"] = odooObject.id;
     order["billing"]["partnerId"] = odooObject.partner_id;
