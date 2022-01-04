@@ -119,6 +119,7 @@ export default async function placeOrder(context, input) {
   const {
     billingAddress,
     cartId,
+    clientIp,
     currencyCode,
     customFields: customFieldsFromClient,
     email,
@@ -215,6 +216,7 @@ export default async function placeOrder(context, input) {
     accountId,
     billingAddress,
     cartId,
+    clientIp,
     createdAt: now,
     currencyCode,
     discounts,

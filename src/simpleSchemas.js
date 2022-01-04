@@ -410,6 +410,10 @@ export const orderInputSchema = new SimpleSchema({
     type: String,
     optional: true
   },
+  "clientIp": {
+    type: String,
+    optional: true
+  },
   "currencyCode": String,
   /**
    * If you need to store customFields, be sure to add them to your
@@ -997,6 +1001,7 @@ export const Payment = new SimpleSchema({
  * @property {Date} anonymousAccessTokens.createdAt When the token was created. Expiry is not currently implemented, but this Date is here to support that.
  * @property {Address} [billingAddress] Optional billing address
  * @property {String} cartId optional For tracking which cart created this order
+ * @property {String} clientIp optional IP of the device of the client, who placed the order
  * @property {Date} createdAt required
  * @property {String} currencyCode required
  * @property {Object} customFields optional
@@ -1039,6 +1044,10 @@ export const Order = new SimpleSchema({
     optional: true
   },
   "createdAt": Date,
+  "clientIp": {
+    type: String,
+    optional: true
+  },
   "currencyCode": String,
   "customFields": {
     type: Object,

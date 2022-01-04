@@ -57,6 +57,7 @@ test("places an anonymous $0 order with no cartId and no payments", async () => 
   const orderInput = Factory.orderInputSchema.makeOne({
     billingAddress: null,
     cartId: null,
+    clientIp: "0.0.0.0",
     currencyCode: "USD",
     email: "valid@email.address",
     ordererPreferredLanguage: "en",
@@ -84,6 +85,7 @@ test("places an anonymous $0 order with no cartId and no payments", async () => 
     ],
     billingAddress: null,
     cartId: null,
+    clientIp: "0.0.0.0",
     createdAt: jasmine.any(Date),
     currencyCode: orderInput.currencyCode,
     customFields: {},
