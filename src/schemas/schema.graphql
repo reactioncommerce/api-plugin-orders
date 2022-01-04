@@ -551,6 +551,9 @@ type Order implements Node {
   "The date and time at which the cart was created, which is when the first item was added to it."
   createdAt: DateTime!
 
+  "IP address of the client device, which placed the order. Can be used for fraud detection."
+  clientIp: String
+
   "The order status for display in UI"
   displayStatus(
     """
@@ -726,6 +729,9 @@ input OrderInput {
   created.
   """
   cartId: String
+
+  "IP address of the client device, which placed the order. This field is optional and can be used for fraud detection"
+  clientIp: String
 
   "The code for the currency in which all values are being provided"
   currencyCode: String!
