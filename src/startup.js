@@ -1,4 +1,36 @@
 import sendOrderEmail from "./util/sendOrderEmail.js";
+import Logger from "@reactioncommerce/logger";
+
+/**
+ * @summary Extend the schema with updated allowedValues
+ * @param {Object} context Startup context
+ * @returns {undefined}
+ */
+ async function extendSchemas(context) {
+  const allFulfillmentTypesArray = await context.queries.allFulfillmentTypes(context);
+
+  if (!allFulfillmentTypesArray || allFulfillmentTypesArray.length === 0){
+    Logger.warn("No fulfillment types available, setting 'shipping' as default");
+    allFulfillmentTypesArray = ['shipping'];
+  }
+
+  const { simpleSchemas: { CommonOrder, OrderFulfillmentGroup, orderFulfillmentGroupInputSchema } } = context;
+  const schemaExtension = {
+    type: {
+      type: String,
+      allowedValues: allFulfillmentTypesArray,
+    }
+  }
+  const schemaExtensionCommonOrder = {
+    fulfillmentType: {
+      type: String,
+      allowedValues: allFulfillmentTypesArray,
+    }
+  }
+  CommonOrder.extend(schemaExtensionCommonOrder);
+  orderFulfillmentGroupInputSchema.extend(schemaExtension);
+  OrderFulfillmentGroup.extend(schemaExtension);
+}
 
 /**
  * @summary Called on startup
@@ -6,8 +38,10 @@ import sendOrderEmail from "./util/sendOrderEmail.js";
  * @param {Object} context.collections Map of MongoDB collections
  * @returns {undefined}
  */
-export default function ordersStartup(context) {
+export default async function ordersStartup(context) {
   const { appEvents } = context;
+
+  await extendSchemas(context);
 
   appEvents.on("afterOrderCreate", ({ order }) => sendOrderEmail(context, order));
 }

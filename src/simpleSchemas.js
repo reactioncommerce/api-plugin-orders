@@ -331,10 +331,10 @@ export const CommonOrder = new SimpleSchema({
     optional: true
   },
   fulfillmentPrices: CommonOrderFulfillmentPrices,
-  fulfillmentType: {
-    type: String,
-    allowedValues: ["shipping"]
-  },
+  // fulfillmentType: {
+  //   type: String,
+  //   allowedValues: ["shipping"]
+  // },
   items: [CommonOrderItem],
   orderId: {
     type: String,
@@ -391,10 +391,10 @@ export const orderFulfillmentGroupInputSchema = new SimpleSchema({
     type: Number,
     optional: true
   },
-  "type": {
-    type: String,
-    allowedValues: ["shipping"]
-  }
+  // "type": {
+  //   type: String,
+  //   allowedValues: ["shipping"]
+  // }
 });
 
 // Exported for unit tests
@@ -852,10 +852,10 @@ export const OrderFulfillmentGroup = new SimpleSchema({
     type: String,
     optional: true
   },
-  "type": {
-    type: String,
-    allowedValues: ["shipping"]
-  },
+  // "type": {
+  //   type: String,
+  //   allowedValues: ["shipping"]
+  // },
   "updatedAt": {
     type: Date,
     optional: true
