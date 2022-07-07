@@ -6,27 +6,27 @@ import Logger from "@reactioncommerce/logger";
  * @param {Object} context Startup context
  * @returns {undefined}
  */
- async function extendSchemas(context) {
-  const allFulfillmentTypesArray = await context.queries.allFulfillmentTypes(context);
+async function extendSchemas(context) {
+  let allFulfillmentTypesArray = await context.queries.allFulfillmentTypes(context);
 
   if (!allFulfillmentTypesArray || allFulfillmentTypesArray.length === 0){
     Logger.warn("No fulfillment types available, setting 'shipping' as default");
-    allFulfillmentTypesArray = ['shipping'];
+    allFulfillmentTypesArray = ["shipping"];
   }
 
   const { simpleSchemas: { CommonOrder, OrderFulfillmentGroup, orderFulfillmentGroupInputSchema } } = context;
   const schemaExtension = {
     type: {
       type: String,
-      allowedValues: allFulfillmentTypesArray,
+      allowedValues: allFulfillmentTypesArray
     }
-  }
+  };
   const schemaExtensionCommonOrder = {
     fulfillmentType: {
       type: String,
-      allowedValues: allFulfillmentTypesArray,
+      allowedValues: allFulfillmentTypesArray
     }
-  }
+  };
   CommonOrder.extend(schemaExtensionCommonOrder);
   orderFulfillmentGroupInputSchema.extend(schemaExtension);
   OrderFulfillmentGroup.extend(schemaExtension);
