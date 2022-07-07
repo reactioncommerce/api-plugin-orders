@@ -1,5 +1,5 @@
-import sendOrderEmail from "./util/sendOrderEmail.js";
 import Logger from "@reactioncommerce/logger";
+import sendOrderEmail from "./util/sendOrderEmail.js";
 
 /**
  * @summary Extend the schema with updated allowedValues
@@ -9,7 +9,7 @@ import Logger from "@reactioncommerce/logger";
 async function extendSchemas(context) {
   let allFulfillmentTypesArray = await context.queries.allFulfillmentTypes(context);
 
-  if (!allFulfillmentTypesArray || allFulfillmentTypesArray.length === 0){
+  if (!allFulfillmentTypesArray || allFulfillmentTypesArray.length === 0) {
     Logger.warn("No fulfillment types available, setting 'shipping' as default");
     allFulfillmentTypesArray = ["shipping"];
   }

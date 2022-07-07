@@ -390,7 +390,7 @@ export const orderFulfillmentGroupInputSchema = new SimpleSchema({
   "totalPrice": {
     type: Number,
     optional: true
-  },
+  }
   // "type": {
   //   type: String,
   //   allowedValues: ["shipping"]
