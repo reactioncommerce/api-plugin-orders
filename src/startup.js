@@ -17,13 +17,11 @@ async function extendSchemas(context) {
   const { simpleSchemas: { CommonOrder, OrderFulfillmentGroup, orderFulfillmentGroupInputSchema } } = context;
   const schemaExtension = {
     type: {
-      type: String,
       allowedValues: allFulfillmentTypesArray
     }
   };
   const schemaExtensionCommonOrder = {
     fulfillmentType: {
-      type: String,
       allowedValues: allFulfillmentTypesArray
     }
   };
