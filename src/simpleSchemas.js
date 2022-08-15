@@ -48,6 +48,62 @@ const Metafield = new SimpleSchema({
   }
 });
 
+const Event = new SimpleSchema({
+  type: String,
+  params: {
+    type: Object,
+    optional: true
+  }
+});
+
+
+export const Rules = new SimpleSchema({
+  conditions: {
+    type: Object,
+    blackbox: true
+  },
+  event: {
+    type: Event
+  }
+});
+
+const CartDescriptionByLanguage = new SimpleSchema({
+  content: String,
+  language: String
+});
+
+export const Discount = new SimpleSchema({
+  "_id": String,
+  "discountLabel": String,
+  "cartDescriptionByLanguage": {
+    type: Array
+  },
+  "cartDescriptionByLanguage.$": {
+    type: CartDescriptionByLanguage
+  },
+  "inclusionRules": { // because shipping discounts are evaluated later, they need to have inclusion rules on them
+    type: Rules,
+    optional: true
+  },
+  "exclusionRules": {
+    type: Rules,
+    optional: true
+  },
+  "discountCalculationType": String, // types provided by this plugin are flat, percentage and fixed
+  "discountValue": Number,
+  "taxReported": {
+    type: Boolean,
+    defaultValue: true
+  },
+  "dateApplied": {
+    type: Date
+  },
+  "dateExpires": {
+    type: Date,
+    optional: true
+  }
+});
+
 /**
  * @name OrderAddress
  * @memberof Schemas
@@ -313,49 +369,57 @@ const CommonOrderTotals = new SimpleSchema({
  *   caring whether it is for a Cart or an Order.
  */
 export const CommonOrder = new SimpleSchema({
-  accountId: {
+  "accountId": {
     type: String,
     optional: true
   },
-  billingAddress: {
+  "billingAddress": {
     type: OrderAddress,
     optional: true
   },
-  cartId: {
+  "cartId": {
     type: String,
     optional: true
   },
-  currencyCode: String,
-  fulfillmentMethodId: {
+  "currencyCode": String,
+  "fulfillmentMethodId": {
     type: String,
     optional: true
   },
-  fulfillmentPrices: CommonOrderFulfillmentPrices,
-  fulfillmentType: {
+  "fulfillmentPrices": CommonOrderFulfillmentPrices,
+  "fulfillmentType": {
     type: String,
     allowedValues: ["shipping"]
   },
-  items: [CommonOrderItem],
-  orderId: {
+  "items": [CommonOrderItem],
+  "orderId": {
     type: String,
     optional: true
   },
-  originAddress: {
+  "originAddress": {
     type: OrderAddress,
     optional: true
   },
-  shippingAddress: {
+  "shippingAddress": {
     type: OrderAddress,
     optional: true
   },
-  shopId: String,
-  sourceType: {
+  "shopId": String,
+  "sourceType": {
     type: String,
     allowedValues: ["cart", "order"]
   },
-  totals: {
+  "totals": {
     type: CommonOrderTotals,
     optional: true
+  },
+  "discounts": {
+    type: Array,
+    defaultValue: [],
+    optional: true
+  },
+  "discounts.$": {
+    type: Discount
   }
 });
 
@@ -757,6 +821,14 @@ export const OrderItem = new SimpleSchema({
     type: Workflow,
     optional: true,
     defaultValue: {}
+  },
+  "discounts": {
+    type: Array,
+    defaultValue: []
+  },
+  "discounts.$": {
+    type: Discount,
+    optional: true
   }
 });
 
@@ -793,6 +865,10 @@ const SelectedFulfillmentOption = new SimpleSchema({
   rate: {
     type: Number,
     min: 0
+  },
+  undiscountedRate: {
+    type: Number,
+    optional: true
   }
 });
 
@@ -860,7 +936,14 @@ export const OrderFulfillmentGroup = new SimpleSchema({
     type: Date,
     optional: true
   },
-  "workflow": Workflow
+  "workflow": Workflow,
+  "discounts": {
+    type: Array,
+    defaultValue: []
+  },
+  "discounts.$": {
+    type: Discount
+  }
 });
 
 /**
@@ -1049,7 +1132,7 @@ export const Order = new SimpleSchema({
     type: Array,
     optional: true
   },
-  "discounts.$": OrderDiscount,
+  "discounts.$": Discount,
   "documents": {
     type: Array,
     optional: true
