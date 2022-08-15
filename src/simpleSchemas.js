@@ -688,18 +688,6 @@ const Workflow = new SimpleSchema({
 });
 
 /**
- * @name OrderDiscount
- * @memberof Schemas
- * @type {SimpleSchema}
- * @property {Number} amount Amount of discount applied to the order
- * @property {String} discountId Discount ID
- */
-const OrderDiscount = new SimpleSchema({
-  amount: Number,
-  discountId: String
-});
-
-/**
  * @name OrderItemAttribute
  * @memberof Schemas
  * @type {SimpleSchema}
@@ -821,14 +809,6 @@ export const OrderItem = new SimpleSchema({
     type: Workflow,
     optional: true,
     defaultValue: {}
-  },
-  "discounts": {
-    type: Array,
-    defaultValue: []
-  },
-  "discounts.$": {
-    type: Discount,
-    optional: true
   }
 });
 
@@ -845,7 +825,7 @@ export const OrderItem = new SimpleSchema({
  * @property {String} name Method name
  * @property {Number} rate Rate
  */
-const SelectedFulfillmentOption = new SimpleSchema({
+export const SelectedFulfillmentOption = new SimpleSchema({
   _id: String,
   carrier: {
     type: String,
@@ -865,10 +845,6 @@ const SelectedFulfillmentOption = new SimpleSchema({
   rate: {
     type: Number,
     min: 0
-  },
-  undiscountedRate: {
-    type: Number,
-    optional: true
   }
 });
 
@@ -936,14 +912,7 @@ export const OrderFulfillmentGroup = new SimpleSchema({
     type: Date,
     optional: true
   },
-  "workflow": Workflow,
-  "discounts": {
-    type: Array,
-    defaultValue: []
-  },
-  "discounts.$": {
-    type: Discount
-  }
+  "workflow": Workflow
 });
 
 /**
@@ -1128,11 +1097,6 @@ export const Order = new SimpleSchema({
     blackbox: true,
     optional: true
   },
-  "discounts": {
-    type: Array,
-    optional: true
-  },
-  "discounts.$": Discount,
   "documents": {
     type: Array,
     optional: true
