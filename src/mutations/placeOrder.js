@@ -145,9 +145,13 @@ export default async function placeOrder(context, input) {
     }
   }
 
-  if (cart.shipping.length === 1 && fulfillmentGroups.length === 1) {
-    fulfillmentGroups[0].discounts = cart.shipping[0].discounts;
-  }
+
+  fulfillmentGroups.forEach((group) => {
+    const matchingCartGroup = cart.shipping.find((shipping) => shipping._id === group._id);
+    if (matchingCartGroup) {
+      group.discounts = matchingCartGroup.discounts;
+    }
+  });
 
   // We are mixing concerns a bit here for now. This is for backwards compatibility with current
   // discount codes feature. We are planning to revamp discounts soon, but until then, we'll look up

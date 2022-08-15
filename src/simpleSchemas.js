@@ -439,6 +439,7 @@ export const orderItemInputSchema = new SimpleSchema({
 });
 
 export const orderFulfillmentGroupInputSchema = new SimpleSchema({
+  "_id": String,
   "data": {
     type: Object,
     blackbox: true,
