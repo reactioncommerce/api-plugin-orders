@@ -22,31 +22,8 @@ export default async function getDiscountsForGroup(context, {
   orderId
 }) {
   const { collections, getFunctionsOfType } = context;
-
-  // Get surcharges to apply to group, if applicable
-  const commonOrder = await xformOrderGroupToCommonOrder({
-    accountId,
-    billingAddress,
-    cartId,
-    collections,
-    currencyCode,
-    group,
-    orderId,
-    discountTotal
-  });
-
   const groupDiscounts = [];
-  // for (const func of getFunctionsOfType("getGroupDiscounts")) {
-  //   const appliedDiscounts = await func(context, { commonOrder }); // eslint-disable-line
-  //   for (const appliedDiscount of appliedDiscounts) {
-  //     // Set fulfillmentGroupId
-  //     appliedDiscount.fulfillmentGroupId = group._id;
-  //     // Push to group surcharge array
-  //     groupDiscounts.push(appliedDiscount);
-  //   }
-  // }
-
-  const groupDiscountTotal = groupDiscounts.reduce((sum, discount) => sum + discount.amount, 0);
+  const groupDiscountTotal = discountTotal;
 
   return {
     groupDiscounts,
